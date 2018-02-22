@@ -1,0 +1,141 @@
+<!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light " ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = true;
+  " ng-controller="ManageMentUsersCtrl">
+
+  <script type="text/ng-template" id="addUserModalContent.html">
+    <div ng-include="'tpl/add_user_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="delUserConfirmModalContent.html">
+    <div ng-include="'tpl/confirm_modal.html'"></div>
+  </script>
+  <!-- column -->
+  <div class="col w b-r">
+    <div class="vbox">
+      <div class="wrapper-sm b-b">
+        <div class="input-group m-b-xxs">
+          <span class="input-group-addon input-sm no-border no-bg"><i class="icon-magnifier text-md m-t-xxs"></i></span>
+          <input type="text" class="form-control input-sm no-border no-bg text-md" placeholder="Search" ng-model="userfilter">
+        </div>
+      </div>
+      <div class="row-row">
+        <div class="cell scrollable hover">
+          <div class="cell-inner">
+            <div class="list-group no-radius no-border no-bg m-b-none">
+              <a ng-repeat="item in users| filter:{Username:userfilter}" class="list-group-item m-l hover-anchor b-a no-select" ng-class="{'focus m-l-none': item.selected}" ng-click="selectUser(item)">
+                <span ng-click='deleteUser(item)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                <span class="block m-l-n" ng-class="{'m-n': item.selected }">{{ item.Username}}</span>
+              </a>
+            </div>
+            <div class="text-center pos-abt w-full" style="top:50%;" ng-hide="(users | filter:{Username:userfilter}).length" translate="content.management.no_subbus">No Service found</div>
+          </div>
+        </div>
+      </div>
+          <ul class="pagination pagination-sm m-t-none m-b-none">
+            <li><a href><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href>1</a></li>
+            <li><a href>2</a></li>
+            <li><a href>3</a></li>
+            <li><a href>4</a></li>
+            <li><a href>5</a></li>
+            <li><a href><i class="fa fa-chevron-right"></i></a></li>
+          </ul>
+    </div>
+  </div>
+  <!-- /column -->
+
+
+
+
+  <!-- column -->
+  <div class="col bg-white-only">
+    <div class="vbox">
+      <div class="wrapper-sm b-b">
+        <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+          <a class="btn btn-xs btn-default" ng-click="addUser()">Add</a>
+        </div>
+      </div>
+      <div class="row-row">
+        <div class="cell">
+          <div class="cell-inner">
+            <div class="wrapper-lg" ng-show="selectedUser">
+              <div class="panel panel-default">
+                <div class=panel-heading>
+                    <strong>信息</strong>
+                </div>
+                <div class="panel-body">
+                  <div class="hbox h-auto m-b-lg">
+                    <div class="col text-center w-sm">
+                      <div class="thumb-lg avatar inline">
+                        <!-- <img ng-src="{{item.avatar}}" ng-show="item.avatar"> -->
+                      </div>
+                    </div>
+                    <div class="col v-middle h1 font-thin">
+                      <div>{{selectedUser.Username}}</div>
+                    </div>
+                  </div>
+                  <!-- fields -->
+                  <div class="form-horizontal">
+                    <div class="form-group m-b-sm">
+                      <label class="col-sm-3 control-label">Email</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" >{{selectedUser.Email}}</p>
+                      </div>
+                    </div>
+                    <div class="form-group m-b-sm">
+                      <label class="col-sm-3 control-label">注册时间</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" >{{selectedUser.Createtime}}</p>
+                      </div>
+                    </div>
+                    <div class="form-group m-b-sm">
+                      <label class="col-sm-3 control-label">最后登陆时间</label>
+                      <div class="col-sm-9">
+                        <p class="form-control-static" >{{selectedUser.Lastlogintime}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+              </div>
+                  <div class="panel panel-default">
+                    <div class=panel-heading>
+                      <strong>操作</strong>
+                    </div>
+                    <div class="panel-body">
+                         <div class="text-danger wrapper text-center" ng-show="formError">
+                          {{formError}}
+                        </div>                    
+                        <div class="form-group">
+                          <label class="col-sm-2 control-label">SYSTEM权限</label>
+                          <div class="col-sm-10">
+                              <label class="i-switch m-t-xs m-r">
+                                <input type="checkbox" ng-checked="isSystem()" ng-click="commitSystem($event)">
+                                <i></i>
+                              </label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-2 control-label">密码重置</label>
+                          <div class="col-sm-10">
+                              <label class="i-switch m-t-xs m-r">
+                                <input type="checkbox"  ng-click="commitPassWdReset($event)">
+                                <i></i>
+                              </label>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              <!-- / fields -->
+            </div>
+          </div>
+        </div>
+      </div>
+  <!-- /column -->
+    </div>
+  </div>
+</div>
+<!-- /hbox layout -->

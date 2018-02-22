@@ -1,0 +1,180 @@
+<!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light " ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = true;
+  " ng-controller="ManageMentIDCsCtrl">
+  <script type="text/ng-template" id="addIDCModalContent.html">
+    <div ng-include="'tpl/add_idc_modal.html'"></div>
+  </script>
+
+  <script type="text/ng-template" id="addCidrModalContent.html">
+    <div ng-include="'tpl/add_cidr_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="delIdcConfirmModalContent.html">
+    <div ng-include="'tpl/confirm_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="delCidrConfirmModalContent.html">
+    <div ng-include="'tpl/confirm_modal.html'"></div>
+  </script>
+  <!-- column -->
+  <div class="col w b-r">
+    <div class="vbox">
+      <div class="row-row">
+        <div class="cell scrollable hover">
+          <div class="cell-inner">
+            <div class="list-group no-radius no-border no-bg m-b-none">
+              <a ng-repeat="item in idcs|orderBy:'name'" class="list-group-item m-l hover-anchor b-a no-select" ng-class="{'focus m-l-none': item.selected}" ng-click="selectIDC(item)">
+                <span ng-click='delIdc(item)' class="pull-right text-muted hover-action"><i class="fa fa-times"></i></span>
+                <span class="block m-l-n" ng-class="{'m-n': item.selected }">{{ item.IdcName}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper b-t">
+        <a href class="btn btn-sm btn-default" ng-click="createIDC()"><i class="fa fa-plus fa-fw m-r-xs"></i> New IDC</a>
+      </div>
+    </div>
+  </div>
+  <!-- /column --> 
+
+
+  <!-- column -->
+  <div class="col bg-white-only">
+    <div ng-show="selectedidc">
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li ng-class="{'active':padderSelect=='conf'}"><a ng-click="padderSelect='conf'">机房配置</a></li>
+          <li ng-class="{'active':padderSelect=='network'}"><a ng-click="padderSelect='network'">网络配置</a></li>
+        </ul>
+      </div>
+
+      <div class="padder">
+            <div class="wrapper-lg" ng-show="padderSelect=='conf'">
+              <!-- fields -->
+              <div class="form-horizontal">
+                  <div class="panel panel-default">
+                    <div class=panel-heading>
+                      <strong>MgrConf Base</strong>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group form-validation">
+                         <div class="text-danger wrapper text-center" ng-show="formError">
+                          {{formError}}
+                        </div>
+                          <label>IdcName</label>
+                          <input type="text" class="form-control"  placeholder="" ng-model="selectedidc.IdcName" required>
+                        </div>
+                        <div class="form-group">
+                          <label>IdcCode</label>
+                          <input type="text" class="form-control"  placeholder="" ng-model="selectedidc.IdcCode" required>
+                        </div>
+                    </div>
+                    <footer class="panel-footer text-right bg-light lter">
+                      <button type="submit" class="btn btn-success"  ng-disabled='form.$invalid'>Submit</button>
+                    </footer>
+                  </div>
+                </div>
+                  <div class="panel panel-default ">
+                    <div class=panel-heading>
+                      <strong>MarathonConf</strong>
+                    </div>
+                    <div class="panel-body">                    
+                        <div class="form-group form-validation">
+                         <div class="text-danger wrapper text-center" ng-show="MarathonformError">
+                          {{MarathonformError}}
+                        </div>
+                            <label>Marathon Server</label>
+                            <input type="text" class="form-control"  placeholder="http://127.0.0.1:8080" ng-model="selectedidc.MarathonSerConf.Server" required >
+                        </div>
+                        <div class="form-group">
+                          <label>Marathon User</label>
+                          <input type="text" class="form-control"   placeholder="Enter Marathon User" ng-model="selectedidc.MarathonSerConf.HttpBasicAuthUser" required >
+                        </div>
+                        
+                        <div class="form-group">
+                          <label>Marathon Password</label>
+                          <input type="text" class="form-control"  placeholder="" ng-model="selectedidc.MarathonSerConf.HttpBasicPassword" required>
+                        </div>
+                    </div>
+                    <footer class="panel-footer text-right bg-light lter">
+                      <button type="submit" class="btn btn-success" ng-click="commitMarathonConf()" ng-disabled='form.$invalid'>Submit</button>
+                    </footer>
+                  </div>
+                   <div class="panel panel-default">
+                    <div class=panel-heading>
+                      <strong>RegistryConf</strong>
+                    </div>
+                    <div class="panel-body">                    
+                        <div class="form-group form-validation">
+                         <div class="text-danger wrapper text-center" ng-show="RegistryformError">
+                          {{RegistryformError}}
+                        </div>
+                            <label>Registry Server</label>
+                            <input type="text" class="form-control" placeholder="http://127.0.0.1:8080" ng-model="selectedidc.RegistryConf.Server" required >
+                        </div>
+                        <div class="form-group">
+                          <label>Registry User</label>
+                          <input type="text" class="form-control" placeholder="Enter Registry User" ng-model="selectedidc.RegistryConf.UserName" required >
+                        </div>
+                        
+                        <div class="form-group">
+                          <label>Registry Password</label>
+                          <input type="text" class="form-control" placeholder="" ng-model="selectedidc.RegistryConf.Password" required>
+                        </div>
+                    </div>
+                    <footer class="panel-footer text-right bg-light lter">
+                      <button type="submit" class="btn btn-success" ng-click="commitRegistryConf()" ng-disabled='form.$invalid'>Submit</button>
+                    </footer>
+                  </div>
+
+              </div>
+              <!-- / fields -->
+
+        
+        <div class="wrapper-lg" ng-show="padderSelect=='network'">
+                   <div class="panel panel-default">
+                    <div class=panel-heading>
+                      <strong>Cidrs</strong>
+                    </div>
+                    <div class="row wrapper">
+                      <div class="col-sm-3">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <button class="btn btn-sm btn-default" type="button" ng-click="createCidr()">New</button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                          <table class="table table-striped b-t b-light">
+                            <thead>
+                              <tr>
+                                <th>NetAddr</th>
+                                <th>StartIP</th>
+                                <th>EndIP</th>
+                                <th>Delete</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="cidr in selectedidc.Cidrs">
+                                <td>{{cidr.Net}}</td>
+                                <td>{{cidr.StartIp}}</td>
+                                <td>{{cidr.EndIp}}</td>
+                                <td><button class="btn m-b-xs btn-sm btn-danger" ng-click="delCidr(cidr)"><i class="fa fa-trash-o"></i></button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                  </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /column -->
+</div>
+<!-- /hbox layout -->

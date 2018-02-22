@@ -1,0 +1,186 @@
+<!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light " ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = true;
+  " ng-controller="ManageMentServicesCtrl">
+  <script type="text/ng-template" id="addServiceModalContent.html">
+    <div ng-include="'tpl/add_service_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="delConfirmModalContent.html">
+    <div ng-include="'tpl/confirm_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="delUserAuthConfirmModalContent.html">
+    <div ng-include="'tpl/confirm_modal.html'"></div>
+  </script>
+  <script type="text/ng-template" id="addAuthModalContent.html">
+    <div ng-include="'tpl/add_auth_modal.html'"></div>
+  </script>
+  <div class="col w b-r" ng-repeat="idx in count" ng-show="isShow(idx)">
+    <div class="vbox">
+      <div class="wrapper-sm b-b" ng-hide="isShow(0)">
+        <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+          <a class="btn btn-xs btn-default" ng-click="returnUpper(idx)">返回</a>
+        </div>
+      </div>
+      <div class="row-row">
+        <div class="cell scrollable hover">
+          <div class="cell-inner">
+            <div class="list-group no-radius no-border no-bg m-b-none">
+              <a ng-repeat="item in services[idx] | filter:{Code:filter[idx-1]}" class="list-group-item m-l hover-anchor b-a no-select" ng-class="{'focus m-l-none': item.selected}" ng-click="selectService(item,idx)">
+                <span ng-click='deleteService(item)' class="pull-right text-muted hover-action" ng-show="isShow(count.length-1)"><i class="fa fa-times"></i></span>
+                <span class="block m-l-n" ng-class="{'m-n': item.selected }">{{ item.Code}}</span>
+              </a>
+            </div>
+            <div class="text-center pos-abt w-full" style="top:50%;" ng-hide="(services[idx] | filter:{Code:filter[idx-1]}).length" translate="content.management.no_subbus">No Service found</div>
+          </div>
+        </div>
+      </div>
+       <div class="wrapper b-t">
+         <a href class="btn btn-sm btn-default" ng-click="createService()"><i class="fa fa-plus fa-fw m-r-xs"></i> New Service</a>
+       </div>
+    </div>
+  </div>
+  <!-- /column -->
+
+
+
+  <!-- column -->
+  <div class="col bg-white-only">
+    <div ng-show="ConfShow()">
+      <div class="wrapper bg-white b-b">
+        <ul class="nav nav-pills nav-sm">
+          <li ng-class="{'active':padderSelect=='conf'}"><a ng-click="padderSelect='conf'">业务配置</a></li>
+          <!-- <li ng-class="{'active':padderSelect=='idc'}"><a ng-click="padderSelect='idc'">机房分布</a></li> -->
+          <li ng-class="{'active':padderSelect=='auth'}"><a ng-click="padderSelect='auth'">业务权限</a></li>
+        </ul>
+      </div>
+      <div class="padder">
+            <div class="row-row" ng-show="padderSelect=='conf'">
+              <!-- fields -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading font-bold">
+                      <strong>Service Conf</strong>
+                    </div>
+                    <div class="panel-body">                    
+                        <div class="form-group form-validation">
+                         <div class="text-danger wrapper text-center" ng-show="formError">
+                          {{formError}}
+                        </div>
+                            <label>Name</label>
+                            <input type="text" class="form-control"  placeholder="ad.delivery[...]" ng-model="selectedService.Name" required >
+                        </div>
+                        <div class="form-group">
+                          <label>Code</label>
+                          <input type="text" class="form-control"   placeholder="ad-delv[...]" ng-model="selectedService.Code" required >
+                        </div>
+
+                        <div class="form-group">
+                          <label>MarathonConf</label>
+                          <textarea class="form-control" rows="20" placeholder="Type your Conf" ng-model="selectedService.MarathonConf"></textarea>
+                        </div>
+                    </div>
+                    <footer class="panel-footer text-right bg-light lter">
+                      <button type="submit" class="btn btn-success" ng-click="commitService()" ng-disabled='form.$invalid'>Submit</button>
+                    </footer>
+                  </div>
+            </div>
+            <div class="row-row" ng-show="padderSelect=='auth'">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      Service auth table
+                    </div>
+                    <div class="row wrapper">
+                      <div class="col-sm-5 m-b-xs">
+                            <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+                              <a class="btn btn-xs btn-default" ng-click="addUser()">Add</a>
+                            </div>
+                      </div>
+                      <div class="col-sm-4">
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table m-b-none" ui-jq="footable" ui-refresh="people" data-filter="#filter" data-page-size="5">
+                        <thead>
+                          <tr>
+                              <th>
+                                  User Name
+                              </th>
+                              <th>
+                                  Role
+                              </th>
+                              <th>
+                                delete
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="User in Users">
+                              <td>{{User.Username}}</td>
+                              <td>{{User.ServiceAuths[0].Role.Name}}</td>
+                              <td><button class="btn m-b-xs btn-sm btn-danger" ng-click="delUserAuth(User,User.ServiceAuths[0])"><i class="fa fa-trash-o"></i></button></td>
+                          </tr>
+                        </tbody>
+                        <tfoot class="hide-if-no-paging">
+                          <tr>
+                              <td colspan="5" class="text-center">
+                                  <ul class="pagination"></ul>
+                              </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                </div>
+              </div>
+              <!--
+              <div class="row-row" ng-show="padderSelect=='idc'">
+
+
+                          <accordion close-others="false">
+                              <accordion-group heading="机房：{{idc.IdcName}} ({{idc.IdcCode}})" ng-repeat="idc in idcs">
+                                  <div class="panel-body">
+                                      <form class="form-horizontal form-validation">
+                                          <div class="form-group">
+                                              <label class="col-sm-2 control-label">容器数量</label>
+                                              <div class="col-sm-3">
+                                                  <input ui-jq="TouchSpin" type="text" ng-model="idc.container_num_new" class="form-control" data-min="2" data-max="1000" data-decimals="0" >
+                                              </div>
+                                          </div>
+                                          <div class="line line-dashed b-b line-lg pull-in"></div>
+                                          <div class="form-group">
+                                              <label class="col-sm-2 control-label">CPU</label>
+                                              <div class="col-sm-3">
+                                                  <input ui-jq="TouchSpin" type="text" ng-model="idc.cpu_core_new" class="form-control" data-min="1" data-max="8" data-step="1" data-decimals="0" data-postfix="core">
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label class="col-sm-2 control-label">内存</label>
+                                              <div class="col-sm-3">
+                                                  <input ui-jq="TouchSpin" type="text" ng-model="idc.mem_max_new" class="form-control" data-min="1" data-max="8" data-step="1" data-decimals="0" data-postfix="GB">
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label class="col-sm-2 control-label">磁盘</label>
+                                              <div class="col-sm-3">
+                                                  <input ui-jq="TouchSpin" type="text" ng-model="idc.disk_size_new" class="form-control" data-min="10" data-max="200" data-step="10" data-decimals="0" data-postfix="GB">
+                                              </div>
+                                          </div>
+                                      </form>
+                                      <a class="btn btn-sm btn-primary">更新配置</a>
+                                  </div>
+
+                              </accordion-group>
+                          </accordion>
+
+              </div>
+              -->
+              <!-- / fields -->
+        </div>
+      </div>  
+    </div>
+  </div>
+  <!-- /column -->
+</div>
+<!-- /hbox layout -->

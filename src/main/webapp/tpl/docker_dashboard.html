@@ -1,0 +1,86 @@
+<!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light " ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = true;
+  " ng-controller="DockerDashBoardCtrl">
+
+
+
+
+  <!-- column -->
+  <div class="col bg-white-only">
+    <div class="vbox">
+      <div class="row-row">
+        <div class="cell">
+          <div class="cell-inner">
+            <div class="wrapper-lg" ng-repeat="idc in idcs">
+                   <div class="panel panel-default">
+                    <div class=panel-heading>
+                      <strong>{{idc.IdcName}}({{idc.IdcCode}})-机房信息</strong>
+                    </div>
+                    <div class="row wrapper">
+                      <div class="col-sm-3" ng-show="idc.OthsData.status">
+                          <h6>
+                            正常主机数：
+                            <span class="label label-info">{{idc.OthsData.mesos["master/slaves_active"]}}</span>
+                            异常主机数：
+                            <span class="label label-info">{{idc.OthsData.mesos["master/slaves_inactive"]}}</span>
+                          </h6>
+                          <h6>
+                            正常运行容器数：
+                            <span class="label label-info">{{idc.OthsData.mesos["master/tasks_running"]}}</span>
+                            异常lost容器数：
+                            <span class="label label-info">{{idc.OthsData.mesos["master/tasks_lost"]}}</span>                
+                          </h6>
+                      </div>
+                        <div class="text-danger wrapper text-center" ng-hide="idc.OthsData.status">
+                          {{idc.OthsData.info}}
+                        </div>
+                    </div>
+                    <div class="table-responsive" ng-show="idc.OthsData.status">
+                          <table class="table table-striped b-t b-light">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>使用量</th>
+                                <th>总容量</th>
+                                <th>百分比</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>CPU</td>
+                                <td>{{idc.OthsData.mesos["master/cpus_used"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/cpus_total"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/cpus_percent"]}}</td>
+                              </tr>
+                              <tr>
+                                <td>MEMORY</td>
+                                <td>{{idc.OthsData.mesos["master/mem_used"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/mem_total"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/mem_percent"]}}</td>
+                              </tr>
+                              <tr>
+                                <td>DISK</td>
+                                <td>{{idc.OthsData.mesos["master/disk_used"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/disk_total"]}}</td>
+                                <td>{{idc.OthsData.mesos["master/disk_percent"]}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                  </div>
+              </div>
+              <!-- / fields -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /column -->
+</div>
+<!-- /hbox layout -->

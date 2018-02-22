@@ -1,0 +1,154 @@
+<!-- hbox layout -->
+<div class="hbox hbox-auto-xs hbox-auto-sm bg-light " ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = true;
+  " ng-controller="DockerContainersCtrl">
+  <script type="text/ng-template" id="scaleContianerModalContent.html">
+    <div ng-include="'tpl/scale_container_modal.html'"></div>
+  </script>
+  <div class="col w b-r" ng-repeat="idx in count" ng-show="isShow(idx)">
+    <div class="vbox">
+      <div class="wrapper-sm b-b" ng-hide="isShow(0)">
+        <div class="m-t-n-xxs m-b-n-xxs m-l-xs">
+          <a class="btn btn-xs btn-default" ng-click="returnUpper(idx)">返回</a>
+        </div>
+      </div>
+      <div class="row-row">
+        <div class="cell scrollable hover">
+          <div class="cell-inner">
+            <div class="list-group no-radius no-border no-bg m-b-none">
+              <a ng-repeat="item in services[idx] | filter:{Code:filter[idx-1]}" class="list-group-item m-l hover-anchor b-a no-select" ng-class="{'focus m-l-none': item.selected}" ng-click="selectService(item,idx)">
+                <span class="block m-l-n" ng-class="{'m-n': item.selected }">{{ item.Code}}</span>
+              </a>
+            </div>
+            <div class="text-center pos-abt w-full" style="top:50%;" ng-hide="(services[idx] | filter:{Code:filter[idx-1]}).length" translate="content.management.no_subbus">No Service found</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /column -->
+
+
+
+  <!-- column -->
+  <div class="col bg-white-only">
+    <div class="row-row" ng-show="ConfShow()">
+      <accordion close-others="false">
+        <accordion-group heading="机房：{{idc.IdcName}} ({{idc.IdcCode}})" ng-repeat="idc in idcs" ng-click="detail(idc)">
+          <table class="table m-b-none" ui-jq="footable" data-page-size="5">
+            <thead>
+              <tr>
+                  <th>
+                      IP
+                  </th>
+                  <th>
+                    Mac
+                  </th>
+                  <th>
+                      Cpu
+                  </th>
+                  <th>
+                      Mem
+                  </th>
+                  <th>
+                      Disk
+                  </th>
+                  <th>
+                      状态
+                  </th>
+                  <th>
+                    操作
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="instance in instances[instancekey]">
+                  <td>{{instance.IpAddr}}</td>
+                  <td>{{instance.MacAddr}}</td>
+                  <td>{{instance.MarathonData.cpus}}</td>
+                  <td>{{instance.MarathonData.mem}}</td>
+                  <td>{{instance.MarathonData.disk}}</td>
+                  <td><span class="label label-lg label-primary arrowed-in">运行中</span></td>
+                  <td>        
+                    <li class="dropdown" dropdown>
+                        <a href class="dropdown-toggle" dropdown-toggle>
+                          <i class="fa-chevron-down fa"></i>
+                        </a>
+                        <ul class="dropdown-menu fadeInRight">
+                          <li>
+                            <a href>重启</a>
+                          </li>
+                        </ul>
+                    </li>
+                  </td>
+                  <!-- <td><a class="blue" title="操作"><i class="fa-chevron-down fa"></i></a></td> -->
+              </tr>
+              </tbody>
+              <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <ul class="pagination"></ul>
+                    </td>
+                </tr>
+              </tfoot>
+            </table>
+          <label class="checkbox checkbox-inline i-checks m-l-md m-b-md">
+              <input type="checkbox" ng-model="scaleTask.used"><i></i>扩容
+          </label>
+            <div class="panel-body" ng-show="scaleTask.used">
+                <form class="form-horizontal form-validation">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">容器数量</label>
+                        <div class="col-sm-3">
+                            <input ui-jq="TouchSpin" type="text" ng-model="scaleTask.container_num_new" class="form-control" data-min="2" data-max="1000" data-decimals="0" >
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">CPU</label>
+                        <div class="col-sm-3">
+                            <input ui-jq="TouchSpin" type="text" ng-model="scaleTask.cpu_core_new" class="form-control" data-min="1" data-max="8" data-step="1" data-decimals="0" data-postfix="core">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">内存</label>
+                        <div class="col-sm-3">
+                            <input ui-jq="TouchSpin" type="text" ng-model="scaleTask.mem_max_new" class="form-control" data-min="1" data-max="8" data-step="1" data-decimals="0" data-postfix="GB">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">磁盘</label>
+                        <div class="col-sm-3">
+                            <input ui-jq="TouchSpin" type="text" ng-model="scaleTask.disk_size_new" class="form-control" data-min="10" data-max="200" data-step="10" data-decimals="0" data-postfix="GB">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">所有容器生效</label>
+
+                        <div class="col-sm-7">
+                            <div class="checkbox m-l m-r-xs">
+                                <label class="i-checks">
+                                    <input type="checkbox"><i></i>
+                                    <button popover-trigger="mouseenter" popover-placement="right" popover-title="提醒" popover="选中后上面所有cpu，内存，磁盘修改会在所有容器生效，当前服务的容器会重启；若不选中，只对新容器生效" type="button" class="btn btn-default">注意</button>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <a class="btn btn-sm btn-primary" ng-click="scaleContainer()">创建扩容发布单</a>
+            </div>
+
+        </accordion-group>
+    </accordion>
+    </div>
+
+  </div>
+
+
+  <!-- /column -->
+</div>
+<!-- /hbox layout -->
