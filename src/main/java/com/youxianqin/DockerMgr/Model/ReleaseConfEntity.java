@@ -1,4 +1,4 @@
 package com.youxianqin.DockerMgr.Model;
 
-public class NodeEntity {
+public class ReleaseConfEntity {
 }
