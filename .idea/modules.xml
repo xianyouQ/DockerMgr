@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DockerMgr.iml" filepath="$PROJECT_DIR$/DockerMgr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaBlog.iml" filepath="$PROJECT_DIR$/JavaBlog.iml" />
     </modules>
   </component>
 </project>

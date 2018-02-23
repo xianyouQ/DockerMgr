@@ -1,25 +1,25 @@
 package com.youxianqin.DockerMgr.Model;
 
-public class RoleEntity {
+public class InstanceEntity {
     private Long id;
-    private Long baseRoleId;
+    private Long ipId;
     private Long serviceId;
-
+    private String hostname;
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-
-    public Long getBaseRoleId() {
-        return baseRoleId;
+    public Long getIpId() {
+        return ipId;
     }
 
-    public void setBaseRoleId(Long baseRoleId) {
-        this.baseRoleId = baseRoleId;
+    public void setIpId(Long ipId) {
+        this.ipId = ipId;
     }
 
     public Long getServiceId() {
@@ -30,5 +30,11 @@ public class RoleEntity {
         this.serviceId = serviceId;
     }
 
+    public String getHostname() {
+        return hostname;
+    }
 
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
 }

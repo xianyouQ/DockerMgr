@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DockerMgr" />
+        <module name="JavaBlog" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="DockerMgr" target="1.7" />
+      <module name="JavaBlog" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

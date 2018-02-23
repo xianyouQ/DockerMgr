@@ -1,10 +1,12 @@
 package com.youxianqin.DockerMgr.Model;
 
+
 public class PermissionEntity {
     private Long id;
     private String name;
     private String desc;
     private String url;
+
 
     public Long getId() {
         return id;

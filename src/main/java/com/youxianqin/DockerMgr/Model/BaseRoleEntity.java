@@ -1,5 +1,6 @@
 package com.youxianqin.DockerMgr.Model;
 
+
 public class BaseRoleEntity {
     private Long id;
     private String name;
