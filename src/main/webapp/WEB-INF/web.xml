@@ -3,7 +3,7 @@
   <display-name>aps</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring.xml;classpath:spring-mybatis.xml</param-value>
+    <param-value>classpath:spring.xml;classpath:spring-mybatis.xml;classpath:spring-shiro.xml</param-value>
   </context-param>
 
   <filter>
@@ -22,7 +22,7 @@
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/api/*</url-pattern>
   </filter-mapping>
 
   <listener>
@@ -44,8 +44,17 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
+      <servlet-name>default</servlet-name>
+      <url-pattern>/css/*</url-pattern>
+      <url-pattern>/fonts/*</url-pattern>
+      <url-pattern>/L10n/*"</url-pattern>
+      <url-pattern>/img/*</url-pattern>
+      <url-pattern>/tpl/*</url-pattern>
+      <url-pattern>/vendor/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>springMvc</servlet-name>
-    <url-pattern>*.do</url-pattern>
+    <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>15</session-timeout>

@@ -147,7 +147,7 @@ app.controller('ManageMentUsersCtrl', ['$scope', '$http', '$filter','$modal',fun
         
       }
       else {
-        $http.post('api/auth/user',$scope.newUser).then(function(resp){
+        $http.post('api/user',$scope.newUser).then(function(resp){
           if ( !resp.data.status ) {
             $scope.formError = resp.data.info;
           }else{

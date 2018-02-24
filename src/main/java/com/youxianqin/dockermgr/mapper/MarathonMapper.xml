@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youxianqin.dockermgr.dao.MarathonMapper">
+  <resultMap id="BaseResultMap" type="com.youxianqin.dockermgr.models.Marathon">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="server" jdbcType="VARCHAR" property="server" />
+    <result column="http_basic_auth_user" jdbcType="VARCHAR" property="httpBasicAuthUser" />
+    <result column="http_basic_password" jdbcType="VARCHAR" property="httpBasicPassword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, server, http_basic_auth_user, http_basic_password
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from marathon_conf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from marathon_conf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.youxianqin.dockermgr.models.Marathon">
+    insert into marathon_conf (id, server, http_basic_auth_user, 
+      http_basic_password)
+    values (#{id,jdbcType=INTEGER}, #{server,jdbcType=VARCHAR}, #{httpBasicAuthUser,jdbcType=VARCHAR}, 
+      #{httpBasicPassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.youxianqin.dockermgr.models.Marathon">
+    insert into marathon_conf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="server != null">
+        server,
+      </if>
+      <if test="httpBasicAuthUser != null">
+        http_basic_auth_user,
+      </if>
+      <if test="httpBasicPassword != null">
+        http_basic_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="server != null">
+        #{server,jdbcType=VARCHAR},
+      </if>
+      <if test="httpBasicAuthUser != null">
+        #{httpBasicAuthUser,jdbcType=VARCHAR},
+      </if>
+      <if test="httpBasicPassword != null">
+        #{httpBasicPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.youxianqin.dockermgr.models.Marathon">
+    update marathon_conf
+    <set>
+      <if test="server != null">
+        server = #{server,jdbcType=VARCHAR},
+      </if>
+      <if test="httpBasicAuthUser != null">
+        http_basic_auth_user = #{httpBasicAuthUser,jdbcType=VARCHAR},
+      </if>
+      <if test="httpBasicPassword != null">
+        http_basic_password = #{httpBasicPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.youxianqin.dockermgr.models.Marathon">
+    update marathon_conf
+    set server = #{server,jdbcType=VARCHAR},
+      http_basic_auth_user = #{httpBasicAuthUser,jdbcType=VARCHAR},
+      http_basic_password = #{httpBasicPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

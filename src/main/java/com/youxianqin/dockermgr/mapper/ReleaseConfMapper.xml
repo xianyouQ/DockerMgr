@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youxianqin.dockermgr.dao.ReleaseConfMapper">
+  <resultMap id="BaseResultMap" type="com.youxianqin.dockermgr.models.ReleaseConf">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="service_id" jdbcType="INTEGER" property="serviceId" />
+    <result column="fault_tolerant" jdbcType="INTEGER" property="faultTolerant" />
+    <result column="idc_paralle" jdbcType="INTEGER" property="idcParalle" />
+    <result column="idc_inner_paralle" jdbcType="INTEGER" property="idcInnerParalle" />
+    <result column="time_out" jdbcType="INTEGER" property="timeOut" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, service_id, fault_tolerant, idc_paralle, idc_inner_paralle, time_out
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from release_conf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from release_conf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.youxianqin.dockermgr.models.ReleaseConf">
+    insert into release_conf (id, service_id, fault_tolerant, 
+      idc_paralle, idc_inner_paralle, time_out
+      )
+    values (#{id,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER}, #{faultTolerant,jdbcType=INTEGER}, 
+      #{idcParalle,jdbcType=INTEGER}, #{idcInnerParalle,jdbcType=INTEGER}, #{timeOut,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.youxianqin.dockermgr.models.ReleaseConf">
+    insert into release_conf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="faultTolerant != null">
+        fault_tolerant,
+      </if>
+      <if test="idcParalle != null">
+        idc_paralle,
+      </if>
+      <if test="idcInnerParalle != null">
+        idc_inner_paralle,
+      </if>
+      <if test="timeOut != null">
+        time_out,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="faultTolerant != null">
+        #{faultTolerant,jdbcType=INTEGER},
+      </if>
+      <if test="idcParalle != null">
+        #{idcParalle,jdbcType=INTEGER},
+      </if>
+      <if test="idcInnerParalle != null">
+        #{idcInnerParalle,jdbcType=INTEGER},
+      </if>
+      <if test="timeOut != null">
+        #{timeOut,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.youxianqin.dockermgr.models.ReleaseConf">
+    update release_conf
+    <set>
+      <if test="serviceId != null">
+        service_id = #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="faultTolerant != null">
+        fault_tolerant = #{faultTolerant,jdbcType=INTEGER},
+      </if>
+      <if test="idcParalle != null">
+        idc_paralle = #{idcParalle,jdbcType=INTEGER},
+      </if>
+      <if test="idcInnerParalle != null">
+        idc_inner_paralle = #{idcInnerParalle,jdbcType=INTEGER},
+      </if>
+      <if test="timeOut != null">
+        time_out = #{timeOut,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.youxianqin.dockermgr.models.ReleaseConf">
+    update release_conf
+    set service_id = #{serviceId,jdbcType=INTEGER},
+      fault_tolerant = #{faultTolerant,jdbcType=INTEGER},
+      idc_paralle = #{idcParalle,jdbcType=INTEGER},
+      idc_inner_paralle = #{idcInnerParalle,jdbcType=INTEGER},
+      time_out = #{timeOut,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
