@@ -2,7 +2,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
-package com.lanyuan.shiro.spring;
+package com.youxianqin.dockermgr.shiro.spring;
 
 import net.sf.ehcache.Ehcache;
 import org.apache.shiro.cache.Cache;

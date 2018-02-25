@@ -36,17 +36,18 @@
         <!--<property name="authorizationCachingEnabled" value="true"/>-->
         <!--<property name="authorizationCacheName" value="authorizationCache"/>-->
 	</bean>
-	
+
+	<!--
      <bean id="sysUserFilter" class="com.youxianqin.dockermgr.shiro.filter.SysUserFilter"/>
     
-    
+    -->
 	 <bean id="kickoutSessionControlFilter" class="com.youxianqin.dockermgr.shiro.filter.KickoutSessionControlFilter">
         <property name="cacheManager" ref="cacheManager"/>
         <property name="sessionManager" ref="sessionManager"/>
 
         <property name="kickoutAfter" value="false"/>
         <property name="maxSession" value="1"/>
-        <property name="kickoutUrl" value="/login.shtml"/>
+        <property name="kickoutUrl" value="/"/>
     </bean>
     
     
@@ -56,35 +57,20 @@
 		<property name="loginUrl" value="/login.shtml" />
 		<property name="successUrl" value="/index.shtml" />
 		<property name="unauthorizedUrl" value="/denied.jsp" />
-		<!-- 自定义权限配置 -->
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
 		<property name="filters">
             <util:map>
-                <entry key="sysUser" value-ref="sysUserFilter"/>
                 <entry key="kickout" value-ref="kickoutSessionControlFilter"/>
             </util:map>
         </property>
 	</bean>
-	<!--自定义filterChainDefinitionMap -->
+
 	<bean id="chainDefinitionSectionMetaSource" class="com.youxianqin.dockermgr.shiro.ChainDefinitionSectionMetaSource">
 		<property name="filterChainDefinitions">
 			<value>
-			/favicon.ico = anon
-    		/admin_files/** = anon
-    		/fonts/** = anon
-    		/404/** = anon
-    		/error.jsp = anon
-    		/js/** = anon
-    		/layer-v1.9.2/** = anon
-    		/notebook/** = anon
-    		/login.shtml = anon
-			/denied.jsp = anon
-			/install.shtml = anon
-			/lanyuan.shtml = anon
 			</value>
 		</property>
 	</bean>
-	
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
 	
 	 <!-- 会话DAO -->

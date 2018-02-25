@@ -2,16 +2,15 @@ package com.youxianqin.dockermgr.dao;
 
 import com.youxianqin.dockermgr.models.BaseRole;
 
+import java.util.List;
+
 public interface BaseRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteEntity(Integer id);
 
-    int insert(BaseRole record);
+    int addEntity(BaseRole record);
 
-    int insertSelective(BaseRole record);
+    List<BaseRole> getEntity();
 
-    BaseRole selectByPrimaryKey(Integer id);
+    int updateEntity(BaseRole record);
 
-    int updateByPrimaryKeySelective(BaseRole record);
-
-    int updateByPrimaryKey(BaseRole record);
 }

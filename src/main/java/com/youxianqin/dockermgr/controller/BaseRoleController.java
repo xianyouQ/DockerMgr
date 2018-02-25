@@ -1,8 +1,8 @@
 package com.youxianqin.dockermgr.controller;
 
 
-import com.youxianqin.dockermgr.dao.BaseRoleMapper;
-import com.youxianqin.dockermgr.models.User;
+import com.youxianqin.dockermgr.models.BaseRole;
+import com.youxianqin.dockermgr.service.BaseRoleService;
 import com.youxianqin.dockermgr.util.ResponseData;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,30 +13,30 @@ import java.util.List;
 @RequestMapping("/api/baserole")
 public class BaseRoleController {
     @Inject
-    private BaseRoleMapper baseRoleMapper;
+    private BaseRoleService baseRoleService;
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseData createUser(@RequestBody User user) {
-        ResponseData<User> response = new ResponseData<User>();
-        response.setData(userSerivce.createUser(user));
+    public ResponseData createBaseRole(@RequestBody BaseRole baseRole) {
+        ResponseData<BaseRole> response = new ResponseData<BaseRole>();
+        response.setData(baseRoleService.createBaseRole(baseRole));
         return response;
     }
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseData getUsers() {
-        ResponseData<List<User>> response = new ResponseData<List<User>>();
-        response.setData(userSerivce.getUserList());
+    public ResponseData getBaseRoles() {
+        ResponseData<List<BaseRole>> response = new ResponseData<List<BaseRole>>();
+        response.setData(baseRoleService.getBaseRoleList());
         return response;
     }
-    @RequestMapping(value = "/{userId}",method = RequestMethod.DELETE)
-    public ResponseData deleteUser(@PathVariable int userId) {
+    @RequestMapping(value = "/{baseRoleId}",method = RequestMethod.DELETE)
+    public ResponseData deleteBaseRole(@PathVariable int baseRoleId) {
         ResponseData response = new ResponseData();
-        userSerivce.deleteUser(userId);
+        baseRoleService.deleteBaseRole(baseRoleId);
         return response;
     }
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseData updateUser(@RequestBody User user) {
-        ResponseData<User> response = new ResponseData<User>();
-        userSerivce.updateUser(user);
-        response.setData(user);
+    public ResponseData updateBaseRole(@RequestBody BaseRole baseRole) {
+        ResponseData<BaseRole> response = new ResponseData<BaseRole>();
+        baseRoleService.updateBaseRole(baseRole);
+        response.setData(baseRole);
         return response;
     }
 }

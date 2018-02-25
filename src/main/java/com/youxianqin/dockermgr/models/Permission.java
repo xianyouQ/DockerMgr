@@ -3,11 +3,13 @@ package com.youxianqin.dockermgr.models;
 public class Permission {
     private Integer id;
 
-    private String desc;
+    private String comment;
 
     private String name;
 
     private String url;
+
+    private Boolean crossService;
 
     public Integer getId() {
         return id;
@@ -18,11 +20,11 @@ public class Permission {
     }
 
     public String getDesc() {
-        return desc;
+        return comment;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDesc(String comment) {
+        this.comment = comment == null ? null : comment.trim();
     }
 
     public String getName() {
@@ -39,5 +41,13 @@ public class Permission {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Boolean getCrossService() {
+        return crossService;
+    }
+
+    public void setCrossService(Boolean crossService) {
+        this.crossService = crossService;
     }
 }

@@ -47,7 +47,7 @@
       <servlet-name>default</servlet-name>
       <url-pattern>/css/*</url-pattern>
       <url-pattern>/fonts/*</url-pattern>
-      <url-pattern>/L10n/*"</url-pattern>
+      <url-pattern>/l10n/*"</url-pattern>
       <url-pattern>/img/*</url-pattern>
       <url-pattern>/tpl/*</url-pattern>
       <url-pattern>/vendor/*</url-pattern>

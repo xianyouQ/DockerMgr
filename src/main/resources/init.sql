@@ -1,9 +1,10 @@
 DROP TABLE IF EXISTS `permission`;
     CREATE TABLE IF NOT EXISTS `permission` (
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-        `desc` varchar(100) NOT NULL DEFAULT '' ,
+        `comment` varchar(100) NOT NULL DEFAULT '' ,
 		 `name` varchar(100) NOT NULL DEFAULT '' ,
-        `url` varchar(100) NOT NULL DEFAULT ''
+        `url` varchar(100) NOT NULL DEFAULT '',
+        `cross_service` bool NOT NULL DEFAULT false
     ) ENGINE=InnoDB;
 	
     DROP TABLE IF EXISTS `base_role`;

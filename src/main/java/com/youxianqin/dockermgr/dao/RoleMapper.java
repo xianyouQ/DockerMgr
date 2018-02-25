@@ -2,16 +2,6 @@ package com.youxianqin.dockermgr.dao;
 
 import com.youxianqin.dockermgr.models.Role;
 
-public interface RoleMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface RoleMapper extends BaseMapper<Role>{
 
-    int insert(Role record);
-
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
 }

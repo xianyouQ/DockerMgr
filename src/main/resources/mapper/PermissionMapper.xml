@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youxianqin.dockermgr.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.youxianqin.dockermgr.models.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="cross_service" jdbcType="BIT" property="crossService" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, comment, name, url, cross_service
+  </sql>
+  <select id="getEntity"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+  </select>
+  <delete id="deleteEntity" parameterType="java.lang.Integer">
+    delete from permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addEntity" parameterType="com.youxianqin.dockermgr.models.Permission">
+    insert into permission (comment, name,
+      url,cross_service)
+    values (#{comment,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{crossService,jdbcType=BIT})
+  </insert>
+
+  <update id="updateEntity" parameterType="com.youxianqin.dockermgr.models.Permission">
+    update permission
+    <set>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="cross_service != null">
+        url = #{cross_service,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

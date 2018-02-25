@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youxianqin.dockermgr.dao.BaseRoleMapper">
+  <resultMap id="BaseResultMap" type="com.youxianqin.dockermgr.models.BaseRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="available" jdbcType="BIT" property="available" />
+    <result column="cross_service" jdbcType="BIT" property="crossService" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, available, cross_service
+  </sql>
+  <select id="getEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from base_role
+  </select>
+  <delete id="deleteEntity" parameterType="java.lang.Integer">
+    delete from base_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addEntity" parameterType="com.youxianqin.dockermgr.models.BaseRole">
+    insert into base_role (name, available,
+      cross_service)
+    values (#{name,jdbcType=VARCHAR}, #{available,jdbcType=BIT},
+      #{crossService,jdbcType=BIT})
+  </insert>
+
+
+  <update id="updateEntity" parameterType="com.youxianqin.dockermgr.models.BaseRole">
+    update base_role
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null">
+        available = #{available,jdbcType=BIT},
+      </if>
+      <if test="crossService != null">
+        cross_service = #{crossService,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

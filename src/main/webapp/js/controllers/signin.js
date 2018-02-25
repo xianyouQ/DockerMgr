@@ -12,7 +12,7 @@ app.controller('SigninFormController', ['$scope','$rootScope', '$http', '$state'
         $scope.authError = "重复登陆";
         $state.go('docker.dashboard');
       }
-      $http.post('api/user/login', {username: $scope.user.name, password: $scope.user.password})
+      $http.post('api/login', {username: $scope.user.name, password: $scope.user.password})
           .then(function(response) {
           if ( !response.data.status ) {
             $scope.authError = response.data.info;

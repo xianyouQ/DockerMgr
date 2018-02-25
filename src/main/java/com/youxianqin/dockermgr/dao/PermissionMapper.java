@@ -2,16 +2,16 @@ package com.youxianqin.dockermgr.dao;
 
 import com.youxianqin.dockermgr.models.Permission;
 
+import java.util.List;
+
 public interface PermissionMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteEntity(int id);
 
-    int insert(Permission record);
+    int addEntity(Permission record);
 
-    int insertSelective(Permission record);
 
-    Permission selectByPrimaryKey(Integer id);
+    List<Permission> getEntity();
 
-    int updateByPrimaryKeySelective(Permission record);
 
-    int updateByPrimaryKey(Permission record);
+    int updateEntity(Permission record);
 }
