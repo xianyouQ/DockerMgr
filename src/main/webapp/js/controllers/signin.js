@@ -14,6 +14,8 @@ app.controller('SigninFormController', ['$scope','$rootScope', '$http', '$state'
       }
       $http.post('api/login', {username: $scope.user.name, password: $scope.user.password})
           .then(function(response) {
+          console.log(response);
+          //{"status":true,"info":"success","data":{"id":null,"username":"youxianqin","password":"","email":null,"lastLoginTime":null,"createTime":null,"roleList":null}}
           if ( !response.data.status ) {
             $scope.authError = response.data.info;
             if (response.data.data != null && "username" in response.data.data) {

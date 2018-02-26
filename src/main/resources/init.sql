@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `permission`;
         `create_time` datetime NOT NULL
     ) ENGINE=InnoDB;
 	
-
+INSERT INTO user(id,username,password,email,create_time) VALUES(1,'youxianqin','youXIAN17','qin1040392240@hotmail.com','2018-02-26 14:06:08');
     DROP TABLE IF EXISTS `idc`;
     CREATE TABLE IF NOT EXISTS `idc` (
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,

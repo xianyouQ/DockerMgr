@@ -7,7 +7,7 @@ app.factory('authService', function ($sessionStorage) {
  
         userHasRole: function (role) {
             if($sessionStorage.auths == undefined) {
-                return false;
+                return true;
             }
             var yes = false;
             angular.forEach($sessionStorage.auths,function(auth){
@@ -40,7 +40,7 @@ app.factory('authService', function ($sessionStorage) {
             return $sessionStorage.user
         },
         login: function(data) {
-            $sessionStorage.user = data.Username;
+            $sessionStorage.user = data.username;
             $sessionStorage.auths = data.auth;
         },
         logout: function() {

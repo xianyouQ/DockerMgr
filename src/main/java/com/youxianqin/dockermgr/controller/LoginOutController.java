@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginOutController {
-    @RequestMapping(value = "/api/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResponseData Login(@RequestBody User user) {
         Subject sub = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
@@ -22,7 +22,7 @@ public class LoginOutController {
         response.setData(user);
         return response;
     }
-    @RequestMapping("/api/logout")
+    @RequestMapping("/logout")
     public ResponseData LogOut() {
         Subject sub = SecurityUtils.getSubject();
         sub.logout();
