@@ -20,12 +20,20 @@
     delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="addEntity" parameterType="com.youxianqin.dockermgr.models.Role">
-    insert into role (name, base_role_id,
-      service_id)
-    values (#{name,jdbcType=VARCHAR}, #{baseRoleId,jdbcType=BIGINT},
-      #{serviceId,jdbcType=INTEGER})
+  <insert id="addEntity" parameterType="com.youxianqin.dockermgr.models.baseRole">
+    insert into role (name, base_role_id
+    <if test="serviceId > 0">
+      ,service_id
+    </if>
+    )
+    values (#{name,jdbcType=VARCHAR}, #{baseRoleId,jdbcType=BIGINT}
+    <if test="serviceId > 0">
+    , #{serviceId,jdbcType=INTEGER}
+    </if>
+    )
   </insert>
+
+
 
   <update id="updateByPrimaryKeySelective" parameterType="com.youxianqin.dockermgr.models.Role">
     update role

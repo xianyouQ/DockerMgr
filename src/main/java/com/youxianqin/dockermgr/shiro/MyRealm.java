@@ -19,6 +19,9 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
+import org.slf4j.*;
+
+import java.util.Date;
 
 /**
  * 自定义Realm,进行数据源配置
@@ -34,6 +37,8 @@ public class MyRealm extends AuthorizingRealm {
 
 	@Inject
 	private UserMapper userMapper;
+
+	final Logger log = LoggerFactory.getLogger(MyRealm.class);
 
 	/**
 	 * 只有需要验证权限时才会调用, 授权查询回调函数, 进行鉴权但缓存中无用户的授权信息时调用.在配有缓存的情况下，只加载一次.
@@ -81,10 +86,11 @@ public class MyRealm extends AuthorizingRealm {
 
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, // 用户名
 				user.getPassword(), // 密码
-				ByteSource.Util.bytes(username + "youxian"),// salt=username+salt
+				ByteSource.Util.bytes( "youxian"),// salt=username+salt
 				getName() // realm name
 		);
 			// 当验证都通过后，把用户信息放在session里
+
 		Session session = SecurityUtils.getSubject().getSession();
 		session.setAttribute("userSession", user);
 		session.setAttribute("userSessionId", user.getId());

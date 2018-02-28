@@ -4,19 +4,21 @@
 app.controller('PassWdChangeFormController', ['$scope', '$http', '$state','authService',function($scope, $http, $state,authService) {
     $scope.user = {};
     $scope.authError = null;
-    $scope.user.Username = authService.returnUser();
+    $scope.user.username = authService.returnUser();
+    console.log($scope.user.username)
     $scope.signup = function() {
       $scope.authError = null;
       // Try to create
-      if ($scope.user.Username == undefined) {
+      if ($scope.user.username == undefined) {
         $scope.authError = "请先登录";
         $state.go('access.signin');
       } else 
-      if ($scope.user.Password !== $scope.user.Repassword) {
+      if ($scope.user.password !== $scope.user.repassword) {
         $scope.authError = "password not match";
         return
       }
-      $http.put('/api/auth/passwd/change', $scope.user)
+	  delete $scope.user["repassword"]
+      $http.put('/api/user/passwdchange', $scope.user)
       .then(function(response) {
         if ( !response.data.status ) {
           $scope.authError = response.data.info;

@@ -1,6 +1,6 @@
 app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal','$q','$interval','myCache',function($scope, $http, $filter,$modal,$q,$interval,myCache) {
   function isObjectValueEqual(a, b) {
-   if(a.Id === b.Id){
+   if(a.id === b.id){
      return true;
    } 
    else {
@@ -43,10 +43,10 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
   $scope.padderSelect='conf';
  //$scope.$watch('services',null,true);
 
-    $http.get('/api/auth/get').then(function (resp) {
+    $http.get('/api/baserole').then(function (resp) {
       if (resp.data.status ){
         angular.forEach(resp.data.data,function(role){
-          if(role.NeedAddAuth == true) {
+          if(role.crossService == true) {
             $scope.roles.push(role);
           }
         });
@@ -72,25 +72,25 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       return;
     }
     angular.forEach(tmpservices,function(service){
-      var codeSplit = service.Code.split("-")
+      var codeSplit = service.code.split("-")
       if(codeSplit.length != serviceCount){
         console.log("invaild service:",service)
         return true
       }
-      var tempService = {Code:""};
+      var tempService = {code:""};
       angular.forEach(codeSplit,function(item,index){        
         if($scope.services[index] == undefined) {
           $scope.services[index] = [];
         }
-        if(tempService.Code == "") {
-          tempService.Code = item
+        if(tempService.code == "") {
+          tempService.code = item
         } else {
-          tempService.Code = tempService.Code + "-" + item
+          tempService.code = tempService.code + "-" + item
         }
 
         if(!$scope.services[index].contains(tempService) && index < $scope.count.length - 1) {        
-          var newService = {Code:""};
-          newService.Code = tempService.Code;
+          var newService = {code:""};
+          newService.code = tempService.code;
           $scope.services[index].push(newService)
         }
       });
@@ -144,7 +144,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     if($scope.selectedService == undefined){
       return false;
     }
-    var codeSplit = $scope.selectedService.Code.split("-")
+    var codeSplit = $scope.selectedService.code.split("-")
     if(codeSplit.length == $scope.count.length){
       return true
     }
@@ -155,7 +155,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       $scope.selectedService = item;
       console.log(item);
       console.log($scope.services);
-      $http.get("/api/auth/auths?serviceId="+$scope.selectedService.Id).then(function(resp){
+      $http.get("/api/auth/auths?serviceId="+$scope.selectedService.id).then(function(resp){
         $scope.Users = resp.data.data;
       });
       return
@@ -165,7 +165,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     });
     $scope.selectedService = item;
     $scope.selectedService.selected = true;
-    var serviceSplit = $scope.selectedService.Code.split("-")
+    var serviceSplit = $scope.selectedService.code.split("-")
     $scope.filter[idx] = serviceSplit[idx];
   };
 
@@ -173,7 +173,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     $scope.filter[idx-1] = "";
   }
   $scope.commitService = function() {
-     $http.post('/api/service/Add',$scope.selectedService).then(function(response) {
+     $http.post('/api/service',$scope.selectedService).then(function(response) {
           if (response.data.status){
             $scope.selectedService = response.data.data
           }
@@ -197,20 +197,20 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       });
       modalInstance.result.then(function (newService) {
         //$scope.selectedService = newService;
-         var codeSplit = newService.Code.split("-")
-         var tempService = {Code:""};
+         var codeSplit = newService.code.split("-")
+         var tempService = {code:""};
         angular.forEach(codeSplit,function(item,index){
               if($scope.services[index] == undefined) {
                 $scope.services[index] = [];
               }
-              if(tempService.Code == "") {
-                tempService.Code = item;
+              if(tempService.code == "") {
+                tempService.code = item;
               } else {
-                tempService.Code = tempService.Code + "-" + item
+                tempService.code = tempService.code + "-" + item
               }
               if(!$scope.services[index].contains(tempService) && index < $scope.count.length - 1) {
-                var newTempService = {Code:""};
-                newTempService.Code = tempService.Code;
+                var newTempService = {code:""};
+                newTempService.code = tempService.code;
                 $scope.services[index].push(newTempService)
               }
             });
@@ -283,19 +283,19 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
 }]);
   app.controller('addServiceModalInstanceCtrl', ['$scope', '$modalInstance','$http','count',function($scope, $modalInstance,$http,$count) {
    
-    $scope.newService = {"Name":"","Code":"","Id":0};
+    $scope.newService = {"name":"","code":"","id":0};
     $scope.formError = null;
     $scope.ok = function () {
       $scope.formError = null;
-      if ($scope.newService.Name == "" || $scope.newService.Code == ""){
+      if ($scope.newService.name == "" || $scope.newService.code == ""){
         return
       }
-      var codeSplit = $scope.newService.Code.split("-")
+      var codeSplit = $scope.newService.code.split("-")
       if (codeSplit.length != $count.length) {
-        $scope.formError = "invaild Service Code";
+        $scope.formError = "invaild Service code";
         return
       } 
-     $http.post('/api/service/Add',$scope.newService).then(function(response) {
+     $http.post('/api/service',$scope.newService).then(function(response) {
           if (response.data.status){
             $scope.newService = response.data.data
             $modalInstance.close($scope.newService);
@@ -320,7 +320,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     $scope.confirm="delete User's auth?";
     $scope.ok = function () {
       $scope.formError = null;
-     $http.post('/api/auth/delete?serviceId='+$serviceAuth.Service.Id,{User:$delUser,ServiceAuth:$serviceAuth}).then(function(response) {
+     $http.post('/api/auth/delete?serviceId='+$serviceAuth.Service.id,{User:$delUser,ServiceAuth:$serviceAuth}).then(function(response) {
           if (response.data.status){
             $modalInstance.close($delUser);
           }
@@ -369,12 +369,12 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       Users:[],
       Role: {}
     };
-    $http.get("/api/auth/user/get?serviceId="+$service.Id).then(function(resp){
+    $http.get("/api/auth/user/get?serviceId="+$service.id).then(function(resp){
         if(resp.data.status) {
           angular.forEach(resp.data.data,function(item){
             var isSkip = false;
             angular.forEach($othsusers,function(inner){
-              if (item.Id == inner.Id) {
+              if (item.id == inner.id) {
                 isSkip = true;
                 return;
               }
@@ -390,7 +390,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       });
     $scope.ok = function () {
       $scope.formError = null;
-      $http.post('/api/auth/new?serviceId='+$service.Id,{Users:$scope.selected.Users,Service:$service,Role:$scope.selected.Role}).then(function(response) {
+      $http.post('/api/auth/new?serviceId='+$service.id,{Users:$scope.selected.Users,Service:$service,Role:$scope.selected.Role}).then(function(response) {
           if (response.data.status){
             $modalInstance.close(response.data.data);
           }

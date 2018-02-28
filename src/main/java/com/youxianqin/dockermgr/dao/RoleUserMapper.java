@@ -3,9 +3,9 @@ package com.youxianqin.dockermgr.dao;
 import com.youxianqin.dockermgr.models.RoleUser;
 
 public interface RoleUserMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(RoleUser record);
+
+    int addEntity(RoleUser record);
 
     int insertSelective(RoleUser record);
 

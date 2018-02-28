@@ -9,14 +9,23 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/service")
+@RequestMapping("/service")
 public class ServiceController {
 
     @Inject
-    ServiceService serviceService;
+    private ServiceService serviceService;
+
+    private final int SERVICE_COUNT = 2;
+    private final String SERVICE_SPLIT = "-";
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseData createService(@RequestBody Service service) {
+        if (service.getCode().split(SERVICE_SPLIT).length != 2) {
+            ResponseData response = new ResponseData();
+            response.setStatus(false);
+            response.setInfo("不合法的service名称");
+            return response;
+        }
         serviceService.addService(service);
         ResponseData response  = new ResponseData<Service>();
         response.setData(service);
@@ -40,6 +49,13 @@ public class ServiceController {
         serviceService.updateService(serivce);
         ResponseData response  = new ResponseData<Service>();
         response.setData(serivce);
+        return response;
+    }
+
+    @RequestMapping(value="/count",method=RequestMethod.GET)
+    public ResponseData getServiceCount() {
+        ResponseData response  = new ResponseData<Integer>();
+        response.setData(SERVICE_COUNT);
         return response;
     }
 }

@@ -79,7 +79,7 @@ angular.module('app')
         $scope.lang.isopen = !$scope.lang.isopen;
       };
       $scope.logout = function() {
-        $http.get("/api/auth/sign").then(function(resp){
+        $http.get("/api/logout").then(function(resp){
           if (resp.data.status) {
             authService.logout()
           }

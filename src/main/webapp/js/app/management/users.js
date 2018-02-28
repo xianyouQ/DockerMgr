@@ -37,7 +37,7 @@ app.controller('ManageMentUsersCtrl', ['$scope', '$http', '$filter','$modal',fun
   $scope.roles = [];
   $scope.userFilter = "";
   $scope.selectedUser = undefined;
-  $http.get("/api/auth/user").then(function(resp){
+  $http.get("/api/user").then(function(resp){
     if (resp.data.status )
     {
       $scope.users = resp.data.data;
@@ -46,7 +46,7 @@ app.controller('ManageMentUsersCtrl', ['$scope', '$http', '$filter','$modal',fun
         toaster.pop("error","get user error",resp.data.info);
     }
   });
-    $http.get('/api/auth/get').then(function (resp) {
+    $http.get('/api/baserole').then(function (resp) {
       if (resp.data.status ){
         $scope.roles = resp.data.data;
       }
@@ -110,7 +110,7 @@ app.controller('ManageMentUsersCtrl', ['$scope', '$http', '$filter','$modal',fun
     var checkbox = $event.target;  
     var checked = checkbox.checked;
     if(checked == true) {
-      $http.post("/api/auth/passwd",$scope.selectedUser).then(function(resp){
+      $http.get("/api/user/"+$scope.selectedUser.id + "/reset").then(function(resp){
         if(resp.data.status) {
           console.log("success")
           $scope.selectedUser.resetdisabled = true;

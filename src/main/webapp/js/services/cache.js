@@ -12,11 +12,11 @@ app.factory('myCache', function ($http,toaster,authService) {
             return;
           }
           var auths = authService.getAuths()
-          if(auths == undefined){
-            return;
-          }
+          //if(auths == undefined){
+          //  return;
+          //}
           services = [];
-          $http.get("/api/service/get").then(function (resp){
+          $http.get("/api/service").then(function (resp){
             if (resp.data.status){
               if(authService.userHasRole("SYSTEM")){
                 services = resp.data.data;
@@ -46,7 +46,7 @@ app.factory('myCache', function ($http,toaster,authService) {
                   count = null;
                 } 
           });
-            $http.get('/api/idc/get').then(function (resp) {
+            $http.get('/api/idc').then(function (resp) {
               if (resp.data.status ){
                 idc = resp.data.data;
               }

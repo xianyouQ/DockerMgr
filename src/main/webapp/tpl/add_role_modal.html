@@ -7,16 +7,16 @@
           {{formError}}
         </div>
           <label>Name</label>
-          <input type="text" class="form-control" ng-model="newRole.Name"  placeholder="Enter Role Name" required>
+          <input type="text" class="form-control" ng-model="newRole.name"  placeholder="Enter Role Name" required>
         </div>
         <div class="checkbox m-l m-r-xs">
           <label class="i-checks">
-            <input type="checkbox" ng-model="newRole.Status"><i></i> Role Active?
+            <input type="checkbox" ng-model="newRole.available"><i></i> Role Active?
           </label>
         </div>
         <div class="checkbox m-l m-r-xs">
           <label class="i-checks">
-            <input type="checkbox" ng-model="newRole.NeedAddAuth"><i></i> every Service Contain this Role?
+            <input type="checkbox" ng-model="newRole.crossService"><i></i> every Service Contain this Role?
           </label>
         </div>
         <div class="checkbox m-t-lg">

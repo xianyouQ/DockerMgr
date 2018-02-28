@@ -11,12 +11,14 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
     private Cache<String, AtomicInteger> passwordRetryCache;
+    final Logger log = LoggerFactory.getLogger(RetryLimitHashedCredentialsMatcher.class);
 
     public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
         passwordRetryCache = cacheManager.getCache("passwordRetryCache");
@@ -39,9 +41,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             // if retry count > 5 throw
             throw new ExcessiveAttemptsException();
         }
-
         boolean matches = super.doCredentialsMatch(token, info);
-
         if (matches) {
             // clear retry count
             passwordRetryCache.remove(username);

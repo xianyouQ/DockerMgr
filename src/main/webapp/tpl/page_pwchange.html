@@ -10,16 +10,16 @@
           </div>
           <div class="list-group list-group-sm">
             <div class="list-group-item">
-              <input placeholder="Name" class="form-control no-border" ng-model="user.Username" disabled>
+              <input placeholder="Name" class="form-control no-border" ng-model="user.username" disabled>
             </div>
             <div class="list-group-item">
-               <input type="password" placeholder="old Password" class="form-control no-border" ng-model="user.OldPassword" required>
+               <input type="password" placeholder="old Password" class="form-control no-border" ng-model="user.oldPassword" required>
             </div>
             <div class="list-group-item">
-               <input type="password" placeholder="new Password" class="form-control no-border" ng-model="user.Password" required>
+               <input type="password" placeholder="new Password" class="form-control no-border" ng-model="user.password" required>
             </div>
             <div class="list-group-item">
-               <input type="password" placeholder="new Password again" class="form-control no-border" ng-model="user.Repassword" required>
+               <input type="password" placeholder="new Password again" class="form-control no-border" ng-model="user.repassword" required>
             </div>
           </div>
           <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="signup()" ng-disabled='form.$invalid'>ChangePassword</button>

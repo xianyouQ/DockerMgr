@@ -4,13 +4,7 @@ import com.youxianqin.dockermgr.models.BaseRole;
 
 import java.util.List;
 
-public interface BaseRoleMapper {
-    int deleteEntity(Integer id);
+public interface BaseRoleMapper  extends BaseMapper<BaseRole>{
 
-    int addEntity(BaseRole record);
-
-    List<BaseRole> getEntity();
-
-    int updateEntity(BaseRole record);
 
 }

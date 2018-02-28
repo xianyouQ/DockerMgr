@@ -49,11 +49,21 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         <property name="filters" value="mergeStat" />
     </bean>
 
+
+    <bean id="basePlugin" class="com.youxianqin.dockermgr.mybatis.plugin.BaseOperationFilter">
+    </bean>
     <!-- myBatis文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
         <property name="mapperLocations" value="classpath:mapper/*.xml" />
+        <!--
+        <property name="plugins">
+            <array>
+                <ref bean="basePlugin" />
+            </array>
+        </property>
+        -->
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

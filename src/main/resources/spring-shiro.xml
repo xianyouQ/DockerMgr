@@ -101,7 +101,7 @@
 	<bean id="cacheManager" class="com.youxianqin.dockermgr.shiro.spring.SpringCacheManagerWrapper" >
 	<property name="cacheManager" ref="springCacheManager"/>
 	</bean>
-	
+
 	 <bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcacheManager"/>
     </bean>

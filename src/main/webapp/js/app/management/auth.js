@@ -35,7 +35,7 @@ function isObjectValueEqual(a, b) {
     $scope.roles = [];
     $scope.selectedrole = null;
     $scope.nodes = [];
-    $http.get('/api/node/get').then(function (resp) {
+    $http.get('/api/permission').then(function (resp) {
       if (resp.data.status ){
         $scope.nodes = resp.data.data;
       }
@@ -43,7 +43,7 @@ function isObjectValueEqual(a, b) {
         toaster.pop("error","get node error",resp.data.info);
       } 
   });
-    $http.get('/api/auth/get').then(function (resp) {
+    $http.get('/api/baserole').then(function (resp) {
       if (resp.data.status ){
         $scope.roles = resp.data.data;
 
@@ -59,8 +59,8 @@ function isObjectValueEqual(a, b) {
     });
       angular.forEach($scope.nodes,function(innernode){
         var skip = false;
-        angular.forEach(item.Nodes,function(node){
-        if(innernode.Id == node.Id) {
+        angular.forEach(item.nodes,function(node){
+        if(innernode.id == node.id) {
           innernode.Active = true;
           skip = true;
         } 
@@ -136,7 +136,7 @@ function isObjectValueEqual(a, b) {
         temprole.Nodes.push(innernode);
       }
     });
-    $http.post('/api/authnode/post',temprole).then(function(resp){
+    $http.put('/api/baserole',temprole).then(function(resp){
           if (resp.data.status ){
             $scope.selectedrole = temprole;
           }
@@ -150,14 +150,14 @@ function isObjectValueEqual(a, b) {
 }]);
 
   app.controller('addRoleModalInstanceCtrl', ['$scope', '$modalInstance','$http',function($scope, $modalInstance,$http) {
-    $scope.newRole = {"Name":"","Status":0,NeedAddAuth:false};
+    $scope.newRole = {"name":"","crossService":false};
     $scope.formError = null;
     $scope.ok = function () {
       $scope.formError = null;
-      if ($scope.newRole.Name == "" || $scope.newRole.Status == 0){
+      if ($scope.newRole.name == ""){
         return
       }
-        $http.post('/api/auth/post',$scope.newRole).then(function(response) {
+        $http.post('/api/baserole',$scope.newRole).then(function(response) {
           if (response.data.status ){
             $modalInstance.close(response.data.data);
           }
@@ -176,14 +176,14 @@ function isObjectValueEqual(a, b) {
   }]); 
 
     app.controller('addNodeModalInstanceCtrl', ['$scope', '$modalInstance','$http',function($scope, $modalInstance,$http) {
-    $scope.newNode = {"Desc":"","Url":""};
+    $scope.newNode = {"name":"","comment":"","url":"","crossService":false};
     $scope.formError = null;
     $scope.ok = function () {
       $scope.formError = null;
-      if ($scope.newNode.Desc == "" || $scope.newNode.Url == ""){
+      if ($scope.newNode.comment == "" || $scope.newNode.url == ""||$scope.newNode.name == ""){
         return
       }
-        $http.post('/api/node/post',$scope.newNode).then(function(response) {
+        $http.post('/api/permission',$scope.newNode).then(function(response) {
           if (response.data.status ){
             $modalInstance.close(response.data.data);
           }

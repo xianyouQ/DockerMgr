@@ -19,11 +19,11 @@ public class Permission {
         this.id = id;
     }
 
-    public String getDesc() {
+    public String getComment() {
         return comment;
     }
 
-    public void setDesc(String comment) {
+    public void setComment(String comment) {
         this.comment = comment == null ? null : comment.trim();
     }
 

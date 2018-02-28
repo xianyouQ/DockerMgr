@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `permission`;
         `create_time` datetime NOT NULL
     ) ENGINE=InnoDB;
 	
-INSERT INTO user(id,username,password,email,create_time) VALUES(1,'youxianqin','youXIAN17','qin1040392240@hotmail.com','2018-02-26 14:06:08');
+INSERT INTO user(id,username,password,email,create_time) VALUES(1,'youxianqin','54fbec589de92fd77528636516d3607d','qin1040392240@hotmail.com','2018-02-26 14:06:08');
     DROP TABLE IF EXISTS `idc`;
     CREATE TABLE IF NOT EXISTS `idc` (
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -132,7 +132,7 @@ INSERT INTO user(id,username,password,email,create_time) VALUES(1,'youxianqin','
         `name` varchar(20) NOT NULL DEFAULT ''  UNIQUE,
         `code` varchar(20) NOT NULL DEFAULT ''  UNIQUE,
         `release_ver_id` integer,
-        `marathon_conf` longtext NOT NULL
+        `marathon_conf` longtext
     ) ENGINE=InnoDB;
 
     DROP TABLE IF EXISTS `base_role_permission`;

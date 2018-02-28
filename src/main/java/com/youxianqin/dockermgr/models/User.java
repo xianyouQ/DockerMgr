@@ -16,6 +16,7 @@ public class User {
 
     private Date createTime;
     private List<Role> roleList;
+    private String oldPassword;
 
     public Integer getId() {
         return id;
@@ -71,5 +72,14 @@ public class User {
 
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
+    }
+
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 }
