@@ -31,7 +31,9 @@ public class ServiceService {
                 baseRolesCrossingService.add(baseRole);
             }
         }
-        roleMapper.addEntitysByService(baseRolesCrossingService,service);
+        if (baseRolesCrossingService.size() > 0) {
+            roleMapper.addEntitysByService(baseRolesCrossingService, service);
+        }
         return service;
     }
     public List<Service> getServices()  {

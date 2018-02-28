@@ -22,7 +22,9 @@ public class BaseRoleService {
         baseRoleMapper.addEntity(baseRole);
         if (baseRole.getCrossService()) {
             List<Service> services = serviceMapper.getEntity();
-            roleMapper.addEntitysByBaseRole(baseRole,services);
+            if(services.size() > 0) {
+                roleMapper.addEntitysByBaseRole(baseRole, services);
+            }
         } else {
             roleMapper.addEntity(baseRole);
         }
