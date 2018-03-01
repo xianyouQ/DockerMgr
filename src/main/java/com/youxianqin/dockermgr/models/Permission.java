@@ -11,6 +11,8 @@ public class Permission {
 
     private Boolean crossService;
 
+    private Boolean chosen;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Permission {
 
     public void setCrossService(Boolean crossService) {
         this.crossService = crossService;
+    }
+
+    public Boolean getChosen() {
+        return chosen;
+    }
+
+    public void setChosen(Boolean chosen) {
+        this.chosen = chosen;
     }
 }

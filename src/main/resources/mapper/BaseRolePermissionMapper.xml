@@ -9,63 +9,38 @@
   <sql id="Base_Column_List">
     id, base_role_id, permission_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="getEntity" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from base_role_permission
-    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <insert id="addEntitys">
+    insert into base_role_permission (base_role_id, permission_id
+      )
+    values
+    <foreach collection="permissionList" item="item" index="index" separator=",">
+    (#{baseRole.id,jdbcType=BIGINT}, #{item.id,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+  <delete id="deleteEntitys">
     delete from base_role_permission
-    where id = #{id,jdbcType=INTEGER}
+    where base_role_id = #{baseRole.id,jdbcType=INTEGER} and permission_id in
+    <foreach collection="permissionList" item="item" index="index" open="(" separator="," close=")">
+         #{item.id,jdbcType=BIGINT}
+    </foreach>
   </delete>
-  <insert id="insert" parameterType="com.youxianqin.dockermgr.models.BaseRolePermission">
-    insert into base_role_permission (id, base_role_id, permission_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{baseRoleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.youxianqin.dockermgr.models.BaseRolePermission">
-    insert into base_role_permission
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="baseRoleId != null">
-        base_role_id,
-      </if>
-      <if test="permissionId != null">
-        permission_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="baseRoleId != null">
-        #{baseRoleId,jdbcType=BIGINT},
-      </if>
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.youxianqin.dockermgr.models.BaseRolePermission">
-    update base_role_permission
-    <set>
-      <if test="baseRoleId != null">
-        base_role_id = #{baseRoleId,jdbcType=BIGINT},
-      </if>
-      <if test="permissionId != null">
-        permission_id = #{permissionId,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.youxianqin.dockermgr.models.BaseRolePermission">
-    update base_role_permission
-    set base_role_id = #{baseRoleId,jdbcType=BIGINT},
-      permission_id = #{permissionId,jdbcType=BIGINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+
+  <delete id="deleteEntityByBaseRole" parameterType="java.lang.Integer">
+    delete from base_role_permission
+    where base_role_id = #{baseRoleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteEntityByPermission" parameterType="java.lang.Integer">
+    delete from base_role_permission
+    where permission_id = #{permissionId,jdbcType=INTEGER}
+  </delete>
+
 </mapper>

@@ -15,7 +15,8 @@ public class User {
     private Date lastLoginTime;
 
     private Date createTime;
-    private List<Role> roleList;
+
+
     private String oldPassword;
 
     public Integer getId() {
@@ -66,13 +67,6 @@ public class User {
         this.createTime = createTime;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
 
 
     public String getOldPassword() {

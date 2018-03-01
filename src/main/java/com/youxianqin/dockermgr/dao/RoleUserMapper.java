@@ -1,17 +1,26 @@
 package com.youxianqin.dockermgr.dao;
 
+import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.RoleUser;
+import com.youxianqin.dockermgr.models.Service;
+import com.youxianqin.dockermgr.models.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleUserMapper {
 
 
-    int addEntity(RoleUser record);
+    int addEntitys(@Param("users") List<User> users,  @Param("baseRole") BaseRole baseRole, @Param("service")Service service);
 
-    int insertSelective(RoleUser record);
+    int deleteEntity(@Param("user") User user, @Param("baseRole") BaseRole baseRole, @Param("service")Service service);
 
-    RoleUser selectByPrimaryKey(Integer id);
+    List<RoleUser> getEntityByUser(int userId);
+    List<RoleUser> getEntityByService(int userId);
 
-    int updateByPrimaryKeySelective(RoleUser record);
+    int deleteEntityByUser(int userId);
 
-    int updateByPrimaryKey(RoleUser record);
+    int deleteEntityByService(int  serviceId);
+
+    int deleteEntityByBaseRole(int  baseRoleId);
 }

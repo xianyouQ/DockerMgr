@@ -68,6 +68,9 @@
 	<bean id="chainDefinitionSectionMetaSource" class="com.youxianqin.dockermgr.shiro.ChainDefinitionSectionMetaSource">
 		<property name="filterChainDefinitions">
 			<value>
+				/api/service/count = anon
+				/api/login = anon
+				/api/logout = anon
 			</value>
 		</property>
 	</bean>

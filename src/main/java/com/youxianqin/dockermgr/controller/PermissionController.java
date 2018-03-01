@@ -17,6 +17,11 @@ public class PermissionController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseData createPermission(@RequestBody Permission permission) {
         ResponseData<Permission> response = new ResponseData<Permission>();
+        if(permission.getCrossService() && permission.getUrl().indexOf("%{serviceId}") < 0) {
+            response.setInfo("url不包含%{serviceId}");
+            response.setStatus(false);
+            return  response;
+        }
         response.setData(permissionService.createPermission(permission));
         return response;
     }

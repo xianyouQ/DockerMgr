@@ -117,10 +117,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="User in Users">
-                              <td>{{User.Username}}</td>
-                              <td>{{User.ServiceAuths[0].Role.Name}}</td>
-                              <td><button class="btn m-b-xs btn-sm btn-danger" ng-click="delUserAuth(User,User.ServiceAuths[0])"><i class="fa fa-trash-o"></i></button></td>
+                          <tr ng-repeat="RoleUser in RoleUsers">
+                              <td>{{RoleUser.user.username}}</td>
+                              <td>{{RoleUser.baseRole.name}}</td>
+                              <td><button class="btn m-b-xs btn-sm btn-danger" ng-click="delUserAuth(RoleUser.user,RoleUser.baseRole)"><i class="fa fa-trash-o"></i></button></td>
                           </tr>
                         </tbody>
                         <tfoot class="hide-if-no-paging">

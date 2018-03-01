@@ -42,20 +42,23 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
             if (StringUtils.isNotEmpty(permission.getUrl() + "") && StringUtils.isNotEmpty(permission.getName()+ "")) {
                 if(permission.getCrossService()) {
                     String originalUrl = permission.getUrl();
-                    if ( !originalUrl.contains("{serviceId}")) {
+                    if ( !originalUrl.contains("%{serviceId}")) {
                         continue;
                     }
                     for (Service service:serviceList) {
                         StringBuilder keySb = new StringBuilder();
-                        keySb.append("perms[" ).append(service.getCode()).append(permission.getName()).append("]");
-                        originalUrl.replace("{serviceId}", service.getId() + "");
-                        section.put(originalUrl.replace("{serviceId}", service.getId() + ""), keySb.toString());
+                        keySb.append("perms[" ).append(service.getCode()).append("-").append(permission.getName()).append("]");
+                        originalUrl.replace("%{serviceId}", service.getId() + "");
+                        section.put(originalUrl, keySb.toString());
                     }
                 } else {
                     StringBuilder keySb = new StringBuilder();
                     keySb.append("perms[").append(permission.getName()).append("]");
                     // 不对角色进行权限验证
                     // 如需要则 permission = "roles[" + resources.getResKey() + "]";
+                    System.out.println(keySb.toString());
+                    System.out.println(permission.getUrl());
+                    System.out.println(section.toString());
                     section.put(permission.getUrl() + "", keySb.toString());
                 }
             }

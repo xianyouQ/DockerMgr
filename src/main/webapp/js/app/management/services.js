@@ -39,7 +39,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
   $scope.idcs = [];
   $scope.filter = new Map();
   $scope.count = [];
-  $scope.Users = [];
+  $scope.RoleUsers = [];
   $scope.padderSelect='conf';
  //$scope.$watch('services',null,true);
 
@@ -155,8 +155,8 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       $scope.selectedService = item;
       console.log(item);
       console.log($scope.services);
-      $http.get("/api/auth/auths?serviceId="+$scope.selectedService.id).then(function(resp){
-        $scope.Users = resp.data.data;
+      $http.get("/api/roleuser/"+$scope.selectedService.id).then(function(resp){
+        $scope.RoleUsers = resp.data.data;
       });
       return
     } 
@@ -260,7 +260,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
         //log error
       });
   };
-  $scope.delUserAuth = function(delUser,serviceAuth) {
+  $scope.delUserAuth = function(delUser,baseRole) {
       var modalInstance = $modal.open({
         templateUrl: 'delUserAuthConfirmModalContent.html',
         controller: 'delUserAuthConfirmModalInstanceCtrl',
@@ -271,6 +271,9 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
           },
           serviceAuth: function(){
             return serviceAuth;
+          },
+          service: function(){
+            return $scope.selectedService;
           }
         }
       });
@@ -314,13 +317,13 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     };
   }]); 
 
-  app.controller('delUserAuthConfirmModalInstanceCtrl', ['$scope', '$modalInstance','$http','delUser','serviceAuth',function($scope, $modalInstance,$http,$delUser,$serviceAuth) {
+  app.controller('delUserAuthConfirmModalInstanceCtrl', ['$scope', '$modalInstance','$http','delUser','serviceAuth',function($scope, $modalInstance,$http,$delUser,$baseRole,$service) {
    
     $scope.formError = null;
     $scope.confirm="delete User's auth?";
     $scope.ok = function () {
       $scope.formError = null;
-     $http.post('/api/auth/delete?serviceId='+$serviceAuth.Service.id,{User:$delUser,ServiceAuth:$serviceAuth}).then(function(response) {
+     $http.delete('/api/roleuser',{users:[$delUser],service:$service,baseRole:$baseRole}).then(function(response) {
           if (response.data.status){
             $modalInstance.close($delUser);
           }
@@ -344,7 +347,7 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
     $scope.confirm="delete service?";
     $scope.ok = function () {
       $scope.formError = null;
-     $http.post('/api/service/Delete',$selectedService).then(function(response) {
+     $http.delete('/api/service/' + $selectedService.id).then(function(response) {
           if (response.data.status){
             $modalInstance.close($selectedService);
           }
@@ -369,12 +372,12 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       Users:[],
       Role: {}
     };
-    $http.get("/api/auth/user/get?serviceId="+$service.id).then(function(resp){
+    $http.get("/api/user").then(function(resp){
         if(resp.data.status) {
           angular.forEach(resp.data.data,function(item){
             var isSkip = false;
             angular.forEach($othsusers,function(inner){
-              if (item.id == inner.id) {
+              if (item.id == inner.user.id) {
                 isSkip = true;
                 return;
               }
@@ -390,9 +393,9 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       });
     $scope.ok = function () {
       $scope.formError = null;
-      $http.post('/api/auth/new?serviceId='+$service.id,{Users:$scope.selected.Users,Service:$service,Role:$scope.selected.Role}).then(function(response) {
+      $http.post('/api/roleuser',{users:$scope.selected.Users,service:$service,baseRole:$scope.selected.Role}).then(function(response) {
           if (response.data.status){
-            $modalInstance.close(response.data.data);
+            $modalInstance.close($scope.selected.Users);
           }
           if  (!response.data.status ) {
             $scope.formError = response.data.info;

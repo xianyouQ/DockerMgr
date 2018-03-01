@@ -119,24 +119,24 @@ function isObjectValueEqual(a, b) {
   $scope.CommitAuth = function() {
     var temprole = {};
     $.extend(true,temprole,$scope.selectedrole);
-    if(temprole.Nodes === null) {
-      temprole.Nodes = [];
+    if(temprole.permissionList === null) {
+      temprole.permissionList = [];
     }
     console.log(temprole)
     angular.forEach($scope.nodes,function(innernode){
       var skip = false;
-      angular.forEach(temprole.Nodes,function(node){
-      if(node.Id == innernode.Id){
-        node.Active = innernode.Active;
+      angular.forEach(temprole.permissionList,function(node){
+      if(node.id == innernode.id){
+        node.chosen = innernode.chosen;
         skip = true;
       }
 
       });
-      if (innernode.Active == true && skip == false){
-        temprole.Nodes.push(innernode);
+      if (innernode.chosen == true && skip == false){
+        temprole.permissionList.push(innernode);
       }
     });
-    $http.put('/api/baserole',temprole).then(function(resp){
+    $http.post('/api/baserolepermission',temprole).then(function(resp){
           if (resp.data.status ){
             $scope.selectedrole = temprole;
           }
@@ -207,7 +207,7 @@ function isObjectValueEqual(a, b) {
     $scope.confirm="delete role?";
     $scope.ok = function () {
       $scope.formError = null;
-     $http.get('/api/auth/delrole?roleId='+$delRole.Id).then(function(response) {
+     $http.get('/api/baserole/'+$delRole.id).then(function(response) {
           if (response.data.status){
             $modalInstance.close($delRole);
           }

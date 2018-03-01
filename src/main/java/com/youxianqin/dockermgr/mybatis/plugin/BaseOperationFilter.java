@@ -20,12 +20,9 @@ public class BaseOperationFilter implements Interceptor {
         RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
         StatementHandler delegate = (StatementHandler)ReflectHelper.getValueByFieldName(handler, "delegate");
         MappedStatement mappedStatement = (MappedStatement) ReflectHelper.getValueByFieldName(delegate, "mappedStatement");
-        if(mappedStatement.getId().indexOf(".BaseMapper.") > -1) {
-            BoundSql boundSql = delegate.getBoundSql();
 
-            Object obj = boundSql.getParameterObject();
-
-        }
+        BoundSql boundSql = delegate.getBoundSql();
+        System.out.println(boundSql.getSql());
         return invocation.proceed();
     }
 

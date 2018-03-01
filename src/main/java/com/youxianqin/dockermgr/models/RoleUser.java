@@ -3,9 +3,15 @@ package com.youxianqin.dockermgr.models;
 public class RoleUser {
     private Integer id;
 
-    private Integer roleId;
+
 
     private Integer userId;
+
+
+    private User user;
+
+    private Integer serivceId;
+    private Integer baseRoleId;
 
     public Integer getId() {
         return id;
@@ -15,13 +21,6 @@ public class RoleUser {
         this.id = id;
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -29,5 +28,29 @@ public class RoleUser {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getSerivceId() {
+        return serivceId;
+    }
+
+    public void setSerivceId(Integer serivceId) {
+        this.serivceId = serivceId;
+    }
+
+    public Integer getBaseRoleId() {
+        return baseRoleId;
+    }
+
+    public void setBaseRoleId(Integer baseRoleId) {
+        this.baseRoleId = baseRoleId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

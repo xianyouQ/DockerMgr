@@ -15,20 +15,13 @@ DROP TABLE IF EXISTS `permission`;
         `cross_service` bool NOT NULL DEFAULT false
     ) ENGINE=InnoDB;
 
-    DROP TABLE IF EXISTS `role`;
-    CREATE TABLE IF NOT EXISTS `role` (
-        `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-        `name` varchar(100),
-        `base_role_id` bigint NOT NULL,
-        `service_id` integer
-    ) ENGINE=InnoDB;
-	
 
    DROP TABLE IF EXISTS `role_user`;
     CREATE TABLE IF NOT EXISTS `role_user` (
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
-        `role_id` INTEGER NOT NULL,
-        `user_id` INTEGER NOT NULL
+        `user_id` INTEGER NOT NULL,
+        `service_id` INTEGER NOT NULL,
+        `base_role_id` INTEGER NOT NULL
     ) ENGINE=InnoDB;
 	
 	

@@ -1,7 +1,7 @@
 package com.youxianqin.dockermgr.service;
 
 import com.youxianqin.dockermgr.dao.BaseRoleMapper;
-import com.youxianqin.dockermgr.dao.RoleMapper;
+import com.youxianqin.dockermgr.dao.BaseRolePermissionMapper;
 import com.youxianqin.dockermgr.dao.ServiceMapper;
 import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.Service;
@@ -17,17 +17,10 @@ public class BaseRoleService {
     @Inject
     private ServiceMapper serviceMapper;
     @Inject
-    private RoleMapper roleMapper;
+    BaseRolePermissionMapper baseRolePermissionMapper;
     public BaseRole createBaseRole(BaseRole baseRole) {
         baseRoleMapper.addEntity(baseRole);
-        if (baseRole.getCrossService()) {
-            List<Service> services = serviceMapper.getEntity();
-            if(services.size() > 0) {
-                roleMapper.addEntitysByBaseRole(baseRole, services);
-            }
-        } else {
-            roleMapper.addEntity(baseRole);
-        }
+        List<Service> services = serviceMapper.getEntity();
         return baseRole;
     }
 
@@ -37,6 +30,7 @@ public class BaseRoleService {
 
     public void deleteBaseRole(int baseRoleId) {
         baseRoleMapper.deleteEntity(baseRoleId);
+        baseRolePermissionMapper.deleteEntityByBaseRole(baseRoleId);
     }
 
     public BaseRole updateBaseRole(BaseRole baseRole){

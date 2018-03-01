@@ -1,5 +1,6 @@
 package com.youxianqin.dockermgr.service;
 
+import com.youxianqin.dockermgr.dao.BaseRolePermissionMapper;
 import com.youxianqin.dockermgr.dao.PermissionMapper;
 
 import com.youxianqin.dockermgr.models.Permission;
@@ -13,6 +14,8 @@ public class PermissionService {
     @Inject
     private PermissionMapper permissionMapper;
 
+    @Inject
+    BaseRolePermissionMapper baseRolePermissionMapper;
     public Permission createPermission(Permission permission) {
         permissionMapper.addEntity(permission);
         return permission;
@@ -24,6 +27,7 @@ public class PermissionService {
 
     public void deleteEntity(int permissionId) {
         permissionMapper.deleteEntity(permissionId);
+        baseRolePermissionMapper.deleteEntityByPermission(permissionId);
     }
 
     public Permission updatePermission(Permission permission){
