@@ -3,10 +3,7 @@ package com.youxianqin.dockermgr.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youxianqin.dockermgr.dao.RoleUserMapper;
-import com.youxianqin.dockermgr.models.BaseRole;
-import com.youxianqin.dockermgr.models.RoleUser;
-import com.youxianqin.dockermgr.models.Service;
-import com.youxianqin.dockermgr.models.User;
+import com.youxianqin.dockermgr.models.*;
 import com.youxianqin.dockermgr.service.BaseRoleService;
 import com.youxianqin.dockermgr.service.RoleUserService;
 import com.youxianqin.dockermgr.util.ResponseData;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.xml.ws.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,27 +46,23 @@ public class RoleUserController {
         ResponseData response = new ResponseData();
         List<BaseRole> baseRoles = baseRoleService.getBaseRoleList();
         for (BaseRole baseRole:baseRoles) {
-            if (baseRole.getId() == roleUserParam.baseRole.getId() && !baseRole.getCrossService()){
+            if (baseRole.getId() == roleUserParam.getBaseRole().getId() && !baseRole.getCrossService()){
                 response.setStatus(false);
                 response.setInfo("no crossService Role found");
                 return response;
             }
         }
-        roleUserService.createRoleUsers(roleUserParam.baseRole,roleUserParam.users,roleUserParam.service);
+        roleUserService.createRoleUsers(roleUserParam.getBaseRole(),roleUserParam.getUsers(),roleUserParam.getService());
         return response;
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseData deleteRoleUser(@RequestBody RoleUserParam roleUserParam) {
         ResponseData response = new ResponseData();
-        roleUserService.deleteRoleUser(roleUserParam.baseRole,roleUserParam.users.get(0),roleUserParam.service);
+        roleUserService.deleteRoleUser(roleUserParam.getBaseRole(),roleUserParam.getUsers().get(0),roleUserParam.getService());
         return response;
     }
 
-    private class RoleUserParam {
-        List<User> users;
-        BaseRole baseRole;
-        Service service;
-    }
+
 
 }

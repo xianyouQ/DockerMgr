@@ -35,7 +35,7 @@
   <select id="getEntityByService" parameterType="java.lang.Integer" resultMap="BaseResultMapWithUser">
     select
     ru.id as id, ru.user_id as user_id,
-    ru.service_id as service_id, u.id as u_id, u.username as u_username, u.email as u_email,
+    ru.service_id as service_id, ru.base_role_id as base_role_id, u.id as u_id, u.username as u_username, u.email as u_email,
     u.create_time as u_create_time, u.last_login_time as u_last_login_time
     from role_user ru
     inner join user u on u.id = ru.user_id

@@ -10,8 +10,10 @@ public class RoleUser {
 
     private User user;
 
-    private Integer serivceId;
+    private Integer serviceId;
+
     private Integer baseRoleId;
+
 
     public Integer getId() {
         return id;
@@ -30,12 +32,12 @@ public class RoleUser {
         this.userId = userId;
     }
 
-    public Integer getSerivceId() {
-        return serivceId;
+    public Integer getServiceId() {
+        return serviceId;
     }
 
-    public void setSerivceId(Integer serivceId) {
-        this.serivceId = serivceId;
+    public void setServiceId(Integer serivceId) {
+        this.serviceId = serivceId;
     }
 
     public Integer getBaseRoleId() {

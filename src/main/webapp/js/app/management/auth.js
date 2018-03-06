@@ -207,7 +207,7 @@ function isObjectValueEqual(a, b) {
     $scope.confirm="delete role?";
     $scope.ok = function () {
       $scope.formError = null;
-     $http.get('/api/baserole/'+$delRole.id).then(function(response) {
+     $http.delete('/api/baserole/'+$delRole.id).then(function(response) {
           if (response.data.status){
             $modalInstance.close($delRole);
           }

@@ -23,6 +23,7 @@ public class UserController {
     public ResponseData createUser(@RequestBody User user) {
         ResponseData<User> response = new ResponseData<User>();
         user.setCreateTime(new Date());
+        user.setPassword("123456");
         PasswordHelper.encryptPassword(user);
         response.setData(userSerivce.createUser(user));
         return response;

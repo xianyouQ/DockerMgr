@@ -157,6 +157,13 @@ app.controller('ManageMentServicesCtrl', ['$scope', '$http', '$filter','$modal',
       console.log($scope.services);
       $http.get("/api/roleuser/"+$scope.selectedService.id).then(function(resp){
         $scope.RoleUsers = resp.data.data;
+        angular.forEach($scope.RoleUsers,function(roleUser,index){
+            angular.forEach($scope.roles,function(innerRole,index){
+                if( innerRole.id == roleUser.baseRoleId) {
+                    roleUser.baseRole = innerRole;
+                }
+            });
+        });
       });
       return
     } 

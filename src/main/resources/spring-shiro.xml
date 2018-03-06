@@ -50,7 +50,8 @@
         <property name="kickoutUrl" value="/"/>
     </bean>
     
-    
+
+	<bean id="myPermissionAuthorizationFilter" class="com.youxianqin.dockermgr.shiro.filter.MyPermissionsAuthorizationFilter"/>
 	<!-- 配置shiro的过滤器工厂类，id- shiroFilter要和我们在web.xml中配置的过滤器一致 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -61,6 +62,7 @@
 		<property name="filters">
             <util:map>
                 <entry key="kickout" value-ref="kickoutSessionControlFilter"/>
+				<entry key="perms" value-ref="myPermissionAuthorizationFilter"/>
             </util:map>
         </property>
 	</bean>
@@ -71,6 +73,7 @@
 				/api/service/count = anon
 				/api/login = anon
 				/api/logout = anon
+				/api/user = anon
 			</value>
 		</property>
 	</bean>
