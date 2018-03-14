@@ -5,18 +5,19 @@ import com.youxianqin.dockermgr.dao.BaseRolePermissionMapper;
 import com.youxianqin.dockermgr.dao.ServiceMapper;
 import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class BaseRoleService {
-    @Inject
+    @Autowired
     private BaseRoleMapper baseRoleMapper;
 
-    @Inject
+    @Autowired
     private ServiceMapper serviceMapper;
-    @Inject
+    @Autowired
     BaseRolePermissionMapper baseRolePermissionMapper;
     public BaseRole createBaseRole(BaseRole baseRole) {
         baseRoleMapper.addEntity(baseRole);

@@ -5,16 +5,17 @@ import com.youxianqin.dockermgr.dao.BaseRolePermissionMapper;
 import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.BaseRolePermission;
 import com.youxianqin.dockermgr.models.Permission;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BaseRolePermissionService {
 
-    @Inject
+    @Autowired
     private BaseRolePermissionMapper baseRolePermissionMapper;
 
     public void updateEntitys(BaseRole baseRole,List<Permission> chosenList,List<Permission> disChosenList) {

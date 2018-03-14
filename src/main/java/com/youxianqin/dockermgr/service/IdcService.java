@@ -3,15 +3,16 @@ package com.youxianqin.dockermgr.service;
 
 import com.youxianqin.dockermgr.dao.IdcMapper;
 import com.youxianqin.dockermgr.models.Idc;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @Service
 public class IdcService {
 
-    @Inject
+    @Autowired
     private IdcMapper idcMapper;
 
     public Idc createPermission(Idc idc) {

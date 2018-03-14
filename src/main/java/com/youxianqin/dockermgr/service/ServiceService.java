@@ -6,18 +6,19 @@ import com.youxianqin.dockermgr.dao.BaseRoleMapper;
 import com.youxianqin.dockermgr.dao.ServiceMapper;
 import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.inject.Inject;
+
 
 @org.springframework.stereotype.Service
 public class ServiceService {
 
-    @Inject
+    @Autowired
     private ServiceMapper serviceMapper;
 
 
 
-    @Inject
+    @Autowired
     private BaseRoleMapper baseRoleMapper;
 
     public Service addService(Service service) {

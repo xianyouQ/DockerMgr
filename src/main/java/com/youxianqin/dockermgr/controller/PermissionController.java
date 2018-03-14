@@ -3,16 +3,17 @@ package com.youxianqin.dockermgr.controller;
 import com.youxianqin.dockermgr.models.Permission;
 import com.youxianqin.dockermgr.service.PermissionService;
 import com.youxianqin.dockermgr.util.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
-    @Inject
+    @Autowired
     private PermissionService permissionService;
     @RequestMapping(method = RequestMethod.POST)
     public ResponseData createPermission(@RequestBody Permission permission) {

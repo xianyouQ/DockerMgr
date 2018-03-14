@@ -1,7 +1,9 @@
 package com.youxianqin.dockermgr.dao;
 
 import com.youxianqin.dockermgr.models.Marathon;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface MarathonMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -3,17 +3,17 @@ package com.youxianqin.dockermgr.controller;
 
 import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.service.BaseRoleService;
-import com.youxianqin.dockermgr.service.ServiceService;
 import com.youxianqin.dockermgr.util.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/baserole")
 public class BaseRoleController {
-    @Inject
+    @Autowired
     private BaseRoleService baseRoleService;
 
     @RequestMapping(method = RequestMethod.POST)

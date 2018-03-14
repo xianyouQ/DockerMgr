@@ -2,7 +2,7 @@ package com.youxianqin.dockermgr.shiro;
 
 import java.util.List;
 
-import javax.inject.Inject;
+
 
 import com.youxianqin.dockermgr.dao.PermissionMapper;
 import com.youxianqin.dockermgr.dao.ServiceMapper;
@@ -11,6 +11,7 @@ import com.youxianqin.dockermgr.models.Service;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.config.Ini;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -19,10 +20,10 @@ import org.springframework.beans.factory.FactoryBean;
  */
 public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section> {
 
-    @Inject
+    @Autowired
     private PermissionMapper permissionMapper;
 
-    @Inject
+    @Autowired
     private ServiceMapper serviceMapper;
 
     // 静态资源访问权限

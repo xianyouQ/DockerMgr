@@ -2,7 +2,9 @@ package com.youxianqin.dockermgr.dao;
 
 import com.youxianqin.dockermgr.models.Release;
 import com.youxianqin.dockermgr.models.ReleaseWithBLOBs;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ReleaseMapper {
     int deleteByPrimaryKey(Integer id);
 

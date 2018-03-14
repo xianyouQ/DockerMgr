@@ -10,18 +10,19 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
+
 import java.util.Date;
 
 @RestController
 public class LoginOutController {
 
-    @Inject
+    @Autowired
     UserSerivce userSerivce;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResponseData Login(@RequestBody User user) {

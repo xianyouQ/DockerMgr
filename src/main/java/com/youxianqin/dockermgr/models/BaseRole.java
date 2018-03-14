@@ -2,6 +2,8 @@ package com.youxianqin.dockermgr.models;
 
 import java.util.List;
 
+
+
 public class BaseRole {
     private Integer id;
 

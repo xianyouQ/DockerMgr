@@ -2,7 +2,7 @@ package com.youxianqin.dockermgr.shiro;
 
 
 
-import javax.inject.Inject;
+
 
 
 import com.youxianqin.dockermgr.dao.RoleUserMapper;
@@ -20,6 +20,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import org.slf4j.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
@@ -32,10 +33,10 @@ import java.util.Date;
  */
 public class MyRealm extends AuthorizingRealm {
 
-	@Inject
+	@Autowired
 	private RoleUserMapper roleUserMapper;
 
-	@Inject
+	@Autowired
 	private UserMapper userMapper;
 
 	final Logger log = LoggerFactory.getLogger(MyRealm.class);

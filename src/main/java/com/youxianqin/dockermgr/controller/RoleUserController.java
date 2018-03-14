@@ -8,9 +8,10 @@ import com.youxianqin.dockermgr.service.BaseRoleService;
 import com.youxianqin.dockermgr.service.RoleUserService;
 import com.youxianqin.dockermgr.util.ResponseData;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+
 import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/roleuser")
 public class RoleUserController {
-    @Inject
+    @Autowired
     private RoleUserService roleUserService;
-    @Inject
+    @Autowired
     private  BaseRoleService baseRoleService;
     /*
     @RequestMapping(value = "/${userId}")

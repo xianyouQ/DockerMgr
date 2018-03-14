@@ -5,16 +5,17 @@ import com.youxianqin.dockermgr.dao.*;
 
 import com.youxianqin.dockermgr.models.*;
 import com.youxianqin.dockermgr.util.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class RoleUserService {
 
-    @Inject
+    @Autowired
     private RoleUserMapper roleUserMapper;
 
 

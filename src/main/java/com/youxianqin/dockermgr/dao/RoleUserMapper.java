@@ -4,10 +4,12 @@ import com.youxianqin.dockermgr.models.BaseRole;
 import com.youxianqin.dockermgr.models.RoleUser;
 import com.youxianqin.dockermgr.models.Service;
 import com.youxianqin.dockermgr.models.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface RoleUserMapper {
 
 

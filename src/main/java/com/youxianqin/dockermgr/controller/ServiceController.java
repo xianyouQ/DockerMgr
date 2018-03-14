@@ -3,16 +3,17 @@ package com.youxianqin.dockermgr.controller;
 import com.youxianqin.dockermgr.models.Service;
 import com.youxianqin.dockermgr.service.ServiceService;
 import com.youxianqin.dockermgr.util.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Inject;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/service")
 public class ServiceController {
 
-    @Inject
+    @Autowired
     private ServiceService serviceService;
 
     private final int SERVICE_COUNT = 2;
