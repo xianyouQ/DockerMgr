@@ -1,6 +1,11 @@
 package com.youxianqin.dockermgr.config;
 
 import com.youxianqin.dockermgr.shiro.MyRealm;
+import com.youxianqin.dockermgr.shiro.credentials.RetryLimitHashedCredentialsMatcher;
+import com.youxianqin.dockermgr.shiro.spring.SpringCacheManagerWrapper;
+import org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.cache.CacheManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.realm.Realm;
@@ -19,16 +24,38 @@ import java.util.LinkedHashMap;
 @Configuration
 public class ShiroConfig {
     @Autowired
-    private CacheConfig cacheConfig;
+    private CacheManager cacheManager;
 
     @Bean
     public Realm realm() {
         MyRealm realm = new com.youxianqin.dockermgr.shiro.MyRealm();
         realm.setCredentialsMatcher(HashedCredentialsMatcher());
+        realm.setCachingEnabled(false);
         return realm;
     }
 
+    @Bean
+    public SpringCacheManagerWrapper shiroCacheManager() {
+        SpringCacheManagerWrapper shiroCacheManager = new com.youxianqin.dockermgr.shiro.spring.SpringCacheManagerWrapper();
+        shiroCacheManager.setCacheManager(cacheManager);
+        return shiroCacheManager;
+    }
 
+    @Bean
+    public QuartzSessionValidationScheduler sessionValidationScheduler() {
+        QuartzSessionValidationScheduler sessionValidationScheduler = new QuartzSessionValidationScheduler();
+        sessionValidationScheduler.setSessionManager(sessionManager());
+        sessionValidationScheduler.setSessionValidationInterval(1800000);
+        return sessionValidationScheduler;
+    }
+    @Bean
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(1800000);
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
+    }
 
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
@@ -48,10 +75,12 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CredentialsMatcher credentialsMatcher() {
-        CredentialsMatcher credentialsMatcher = new com.youxianqin.dockermgr.shiro.credentials.RetryLimitHashedCredentialsMatcher();
-        credentialsMatcher.
-        return new
+    public CredentialsMatcher HashedCredentialsMatcher() {
+        RetryLimitHashedCredentialsMatcher credentialsMatcher = new RetryLimitHashedCredentialsMatcher(shiroCacheManager());
+        credentialsMatcher.setHashAlgorithmName("md5");
+        credentialsMatcher.setHashIterations(2);
+        credentialsMatcher.setStoredCredentialsHexEncoded(true);
+        return credentialsMatcher;
     }
 
     @Bean
@@ -85,6 +114,7 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager(){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRealm(realm());
+        securityManager.setCacheManager(shiroCacheManager());
         return securityManager;
     }
 }
