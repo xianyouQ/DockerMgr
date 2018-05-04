@@ -91,7 +91,7 @@ public class ShiroConfig {
                         }
                         for (Service service:serviceList) {
                             StringBuilder keySb = new StringBuilder();
-                            keySb.append("perms[" ).append(service.getCode()).append("-").append(permission.getName()).append("]");
+                            keySb.append("perms[" ).append(service.getCode()).append("-").append(permission.getName()).append(":").append(permission.getMethod()).append("]");
                             originalUrl.replace("%{serviceId}", service.getId() + "");
                             serivceFilterChainDefinition.put(originalUrl, keySb.toString());
                         }
@@ -100,10 +100,6 @@ public class ShiroConfig {
                         keySb.append("perms[").append(permission.getName()).append("]");
                         // 不对角色进行权限验证
                         // 如需要则 permission = "roles[" + resources.getResKey() + "]";
-                        System.out.println(keySb.toString());
-                        System.out.println(permission.getUrl());
-                        System.out.println(serivceFilterChainDefinition.toString());
-                        serivceFilterChainDefinition.put(permission.getUrl() + "", keySb.toString());
                     }
                 }
 

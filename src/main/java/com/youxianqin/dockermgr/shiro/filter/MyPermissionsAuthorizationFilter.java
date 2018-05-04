@@ -30,7 +30,22 @@ public class MyPermissionsAuthorizationFilter extends PermissionsAuthorizationFi
         return false;
 
     }
+    public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
+        Subject subject = this.getSubject(request, response);
+        String[] perms = (String[])((String[])mappedValue);
+        boolean isPermitted = true;
+        if (perms != null && perms.length > 0) {
+            if (perms.length == 1) {
+                if (!subject.isPermitted(perms[0])) {
+                    isPermitted = false;
+                }
+            } else if (!subject.isPermittedAll(perms)) {
+                isPermitted = false;
+            }
+        }
 
+        return isPermitted;
+    }
     private void responseOutWithJson(ServletResponse response, ResponseData responseData,int httpCode) throws IOException{
         ObjectMapper om = new ObjectMapper();
         HttpServletResponse httpResponse = (HttpServletResponse)response;
