@@ -12,7 +12,7 @@ import java.util.Properties;
 
 
 @Intercepts( {
-        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class}) })
+        @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class,Integer.class}) })
 public class BaseOperationFilter implements Interceptor {
 
     @Override

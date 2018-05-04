@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/baserolepermission")
+@RequestMapping("/api/baserolepermission")
 public class BaseRolePermissionController {
 
     @Autowired

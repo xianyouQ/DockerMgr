@@ -176,7 +176,7 @@ function isObjectValueEqual(a, b) {
   }]); 
 
     app.controller('addNodeModalInstanceCtrl', ['$scope', '$modalInstance','$http',function($scope, $modalInstance,$http) {
-    $scope.newNode = {"name":"","comment":"","url":"","crossService":false};
+    $scope.newNode = {"name":"","comment":"","url":"","crossService":false,method:"GET"};
     $scope.formError = null;
     $scope.ok = function () {
       $scope.formError = null;

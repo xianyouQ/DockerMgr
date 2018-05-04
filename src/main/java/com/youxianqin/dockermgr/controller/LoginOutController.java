@@ -24,7 +24,7 @@ public class LoginOutController {
 
     @Autowired
     UserSerivce userSerivce;
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/api/login",method = RequestMethod.POST)
     public ResponseData Login(@RequestBody User user) {
         Subject sub = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
@@ -55,7 +55,7 @@ public class LoginOutController {
         response.setData(updateUser);
         return response;
     }
-    @RequestMapping("/logout")
+    @RequestMapping("/api/logout")
     public ResponseData LogOut() {
         Subject sub = SecurityUtils.getSubject();
         sub.logout();

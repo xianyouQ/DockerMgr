@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 产生责任链，确定每个url的访问权限
  *
  */
-public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section> {
+public class ChainDefinitionSectionMetaSource {
 
     @Autowired
     private PermissionMapper permissionMapper;

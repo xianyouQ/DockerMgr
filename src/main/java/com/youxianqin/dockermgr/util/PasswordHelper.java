@@ -9,7 +9,7 @@ import org.apache.shiro.util.ByteSource;
 public class PasswordHelper {
     private static RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
     private static String algorithmName = "md5";
-    private static int hashIterations = 2;
+    private static int hashIterations = 3;
     private static String defaultSalt = "youxian";
 
     public static void encryptPassword(User user) {

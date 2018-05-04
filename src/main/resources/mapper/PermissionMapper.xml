@@ -6,10 +6,11 @@
     <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="method" jdbcType="VARCHAR" property="method"/>
     <result column="cross_service" jdbcType="BIT" property="crossService" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, comment, name, url, cross_service
+    id, comment, name, url, cross_service, method
   </sql>
   <select id="getEntity"  resultMap="BaseResultMap">
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="addEntity" parameterType="com.youxianqin.dockermgr.models.Permission">
     insert into permission (comment, name,
-      url,cross_service)
+      url,cross_service,method)
     values (#{comment,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-      #{url,jdbcType=VARCHAR}, #{crossService,jdbcType=BIT})
+      #{url,jdbcType=VARCHAR}, #{crossService,jdbcType=BIT}, #{method,jdbcType=VARCHAR})
   </insert>
 
   <update id="updateEntity" parameterType="com.youxianqin.dockermgr.models.Permission">
@@ -40,7 +41,10 @@
         url = #{url,jdbcType=VARCHAR},
       </if>
       <if test="cross_service != null">
-        url = #{cross_service,jdbcType=BIT},
+        cross_service = #{cross_service,jdbcType=BIT},
+      </if>
+      <if test="method != null">
+        method = #{method, jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

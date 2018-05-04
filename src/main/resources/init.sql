@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `permission`;
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
         `comment` varchar(100) NOT NULL DEFAULT '' ,
 		 `name` varchar(100) NOT NULL DEFAULT '' ,
+		 `method` varchar(20) NOT NULL DEFAULT '',
         `url` varchar(100) NOT NULL DEFAULT '',
         `cross_service` bool NOT NULL DEFAULT false
     ) ENGINE=InnoDB;

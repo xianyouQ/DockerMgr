@@ -9,6 +9,8 @@ public class Permission {
 
     private String url;
 
+    private String method;
+
     private Boolean crossService;
 
     private Boolean chosen;
@@ -19,6 +21,15 @@ public class Permission {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public String getComment() {

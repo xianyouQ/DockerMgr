@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/roleuser")
+@RequestMapping("/api/roleuser")
 public class RoleUserController {
     @Autowired
     private RoleUserService roleUserService;
