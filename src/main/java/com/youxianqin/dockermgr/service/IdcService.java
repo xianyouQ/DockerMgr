@@ -32,4 +32,6 @@ public class IdcService {
         idcMapper.updateEntity(idc);
         return idc;
     }
+
+
 }

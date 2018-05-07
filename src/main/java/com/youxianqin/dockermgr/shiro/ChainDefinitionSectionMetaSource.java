@@ -50,17 +50,17 @@ public class ChainDefinitionSectionMetaSource {
                         StringBuilder keySb = new StringBuilder();
                         keySb.append("perms[" ).append(service.getCode()).append("-").append(permission.getName()).append("]");
                         originalUrl.replace("%{serviceId}", service.getId() + "");
-                        section.put(originalUrl, keySb.toString());
+                        StringBuilder urlSb = new StringBuilder();
+                        urlSb.append(permission.getMethod()).append(" ").append(originalUrl);
+                        section.put(urlSb.toString(), keySb.toString());
                     }
                 } else {
+                    String originalUrl = permission.getUrl();
                     StringBuilder keySb = new StringBuilder();
                     keySb.append("perms[").append(permission.getName()).append("]");
-                    // 不对角色进行权限验证
-                    // 如需要则 permission = "roles[" + resources.getResKey() + "]";
-                    System.out.println(keySb.toString());
-                    System.out.println(permission.getUrl());
-                    System.out.println(section.toString());
-                    section.put(permission.getUrl() + "", keySb.toString());
+                    StringBuilder urlSb = new StringBuilder();
+                    urlSb.append(permission.getMethod()).append(" ").append(originalUrl);
+                    section.put(urlSb.toString() + "", keySb.toString());
                 }
             }
 

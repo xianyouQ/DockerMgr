@@ -7,6 +7,8 @@ import com.youxianqin.dockermgr.models.Service;
 import com.youxianqin.dockermgr.shiro.MyRealm;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 
 
@@ -29,6 +31,8 @@ import java.util.List;
 
 @Configuration
 public class ShiroConfig {
+
+    private static final Logger LOGGER = LogManager.getLogger();
     @Autowired
     private CacheManager cacheManager;
 
@@ -72,6 +76,7 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/api/logout", "anon");
         chainDefinition.addPathDefinition("/api/user", "anon");
         chainDefinition.addPathDefinitions(serviceFilterChainDefinition());
+        System.out.println(chainDefinition);
         return chainDefinition;
     }
 
@@ -97,7 +102,7 @@ public class ShiroConfig {
                         }
                     } else {
                         StringBuilder keySb = new StringBuilder();
-                        keySb.append("perms[").append(permission.getName()).append("]");
+                        keySb.append("perms[").append(permission.getName()).append(":").append(permission.getMethod()).append("]");
                         // 不对角色进行权限验证
                         // 如需要则 permission = "roles[" + resources.getResKey() + "]";
                     }
