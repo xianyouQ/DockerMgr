@@ -5,6 +5,7 @@ import com.youxianqin.dockermgr.dao.IdcMapper;
 import com.youxianqin.dockermgr.models.Idc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class IdcService {
 
     @Autowired
     private IdcMapper idcMapper;
-
-    public Idc createPermission(Idc idc) {
+    @Transactional
+    public Idc createIdc(Idc idc) {
         idcMapper.addEntity(idc);
         return idc;
     }
@@ -23,12 +24,12 @@ public class IdcService {
     public List<Idc> getIdcList()  {
         return idcMapper.getEntity();
     }
-
+    @Transactional
     public void deleteEntity(int idcId) {
         idcMapper.deleteEntity(idcId);
     }
-
-    public Idc updatePermission(Idc idc){
+    @Transactional
+    public Idc updateIdc(Idc idc){
         idcMapper.updateEntity(idc);
         return idc;
     }

@@ -7,6 +7,20 @@
     <result column="available" jdbcType="BIT" property="available" />
     <result column="cross_service" jdbcType="BIT" property="crossService" />
   </resultMap>
+  <resultMap id="BaseResultMapWithPermission" type="com.youxianqin.dockermgr.models.BaseRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="available" jdbcType="BIT" property="available" />
+    <result column="cross_service" jdbcType="BIT" property="crossService" />
+    <collection  property="permissionList" ofType="com.youxianqin.dockermgr.models.Permission">
+      <id column="p_id" jdbcType="INTEGER" property="id" />
+      <result column="p_comment" jdbcType="VARCHAR" property="comment" />
+      <result column="p_name" jdbcType="VARCHAR" property="name" />
+      <result column="p_url" jdbcType="VARCHAR" property="url" />
+      <result column="p_method" jdbcType="VARCHAR" property="method" />
+      <result column="p_cross_service" jdbcType="BIT" property="crossService" />
+    </collection >
+  </resultMap>
   <sql id="Base_Column_List">
     id, name, available, cross_service
   </sql>
@@ -14,6 +28,12 @@
     select 
     <include refid="Base_Column_List" />
     from base_role
+  </select>
+  <select id="getEntityWithPermission" resultMap="BaseResultMapWithPermission">
+    select
+    r.id as id , r.name as name ,r.available as available ,r.cross_service as cross_service , p.id as p_id ,p.comment as p_comment,
+    p.name as p_name, p.url as p_url , p.method as p_method,p.cross_service as p_cross_service
+    from base_role r left join base_role_permission bp on bp.base_role_id = r.id left join permission p on  p.id = bp.permission_id
   </select>
   <delete id="deleteEntity" parameterType="java.lang.Integer">
     delete from base_role

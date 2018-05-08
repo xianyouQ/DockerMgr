@@ -59,14 +59,14 @@ function isObjectValueEqual(a, b) {
     });
       angular.forEach($scope.nodes,function(innernode){
         var skip = false;
-        angular.forEach(item.nodes,function(node){
+        angular.forEach(item.permissionList,function(node){
         if(innernode.id == node.id) {
-          innernode.Active = true;
+          innernode.chosen = true;
           skip = true;
         } 
       });
       if(skip == false){
-        innernode.Active = false;
+        innernode.chosen = false;
       }
     });
     $scope.selectedrole = item;
@@ -136,6 +136,7 @@ function isObjectValueEqual(a, b) {
         temprole.permissionList.push(innernode);
       }
     });
+     console.log(temprole)
     $http.post('/api/baserolepermission',temprole).then(function(resp){
           if (resp.data.status ){
             $scope.selectedrole = temprole;

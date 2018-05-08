@@ -5,15 +5,19 @@ package com.youxianqin.dockermgr.shiro;
 
 
 
-import com.youxianqin.dockermgr.dao.RoleUserMapper;
-import com.youxianqin.dockermgr.dao.UserMapper;
-import com.youxianqin.dockermgr.models.User;
+import com.youxianqin.dockermgr.dao.*;
+import com.youxianqin.dockermgr.models.*;
+import com.youxianqin.dockermgr.service.BaseRoleService;
+import com.youxianqin.dockermgr.service.PermissionService;
+import com.youxianqin.dockermgr.service.RoleUserService;
+import com.youxianqin.dockermgr.service.ServiceService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -22,7 +26,9 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 自定义Realm,进行数据源配置
@@ -34,10 +40,24 @@ import java.util.Date;
 public class MyRealm extends AuthorizingRealm {
 
 	@Autowired
-	private RoleUserMapper roleUserMapper;
+	private UserMapper userMapper;
 
 	@Autowired
-	private UserMapper userMapper;
+	private BaseRoleMapper baseRoleMapper;
+
+	@Autowired
+	private RoleUserMapper roleUserMapper;
+
+
+	@Autowired
+	private ServiceMapper serviceMapper;
+
+	@Autowired
+	private BaseRolePermissionMapper baseRolePermissionMapper;
+
+	@Autowired
+
+	private PermissionMapper permissionMapper;
 
 	final Logger log = LoggerFactory.getLogger(MyRealm.class);
 
@@ -46,26 +66,82 @@ public class MyRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-			/*
+
 		String loginName = SecurityUtils.getSubject().getPrincipal().toString();
 		if (loginName != null) {
 			String userId = SecurityUtils.getSubject().getSession().getAttribute("userSessionId").toString();
+			int id;
+			try {
+				id = Integer.parseInt(userId);
+			}catch (NumberFormatException e) {
+				return null;
+			}
 
-			List<ResFormMap> rs = roleUserDao.(userId);
+			List<RoleUser> rs = roleUserMapper.getEntityByUser(id);
 			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			List<BaseRolePermission> baseRolePermissions = baseRolePermissionMapper.getEntity();
+			List<Permission> permissions = permissionMapper.getEntity();
+			List<BaseRole> baseRoles = baseRoleMapper.getEntity();
+			List<Service> services = serviceMapper.getEntity();
 			// 用户的角色集合
 			// info.addRole("default");
 			// 用户的角色集合
 			// info.setRoles(user.getRolesName());
 			// 用户的角色对应的所有权限，如果只使用角色定义访问权限
-			for (ResFormMap resources : rs) {
-				info.addStringPermission(resources.get("resKey").toString());
+			for (RoleUser resource : rs) {
+				BaseRole role = null;
+				Service service = null;
+				List<Permission> permissionList = new ArrayList<Permission>();
+				for (BaseRole baseRole:baseRoles) {
+					if (resource.getBaseRoleId() == baseRole.getId()) {
+						role = baseRole;
+						break;
+					}
+				}
+				if (role == null) continue;
+				for (Service service1:services) {
+					if (resource.getServiceId() == service1.getId()) {
+						service = service1;
+						break;
+					}
+				}
+				if (role.getCrossService() && service == null) continue;
+				if (!role.getCrossService() && service != null) continue;
+				for (BaseRolePermission baseRolePermission:baseRolePermissions) {
+					if (resource.getBaseRoleId() == baseRolePermission.getBaseRoleId()) {
+
+						for (Permission permission : permissions) {
+							if (permission.getId() == baseRolePermission.getPermissionId()) {
+								permissionList.add(permission);
+								break;
+							}
+						}
+						break;
+					}
+				}
+
+				for (Permission permission:permissionList) {
+					if (role.getCrossService() != permission.getCrossService()) {
+						continue;
+					}
+					StringBuilder PermSB =  new StringBuilder();
+					if (role.getCrossService()) {
+						PermSB.append(service.getCode()).append("-");
+
+					}
+					PermSB.append(permission.getName()).append(":").append(permission.getMethod());
+					log.debug(PermSB.toString());
+					info.addStringPermission(PermSB.toString());
+				}
+
+
 			}
+
 
 			return info;
 		}
-		*/
+
 		return null;
 	}
 

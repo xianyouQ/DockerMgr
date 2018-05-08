@@ -3,9 +3,9 @@ package com.youxianqin.dockermgr.models;
 public class BaseRolePermission {
     private Integer id;
 
-    private Long baseRoleId;
+    private Integer baseRoleId;
 
-    private Long permissionId;
+    private Integer permissionId;
 
     public Integer getId() {
         return id;
@@ -15,19 +15,19 @@ public class BaseRolePermission {
         this.id = id;
     }
 
-    public Long getBaseRoleId() {
+    public Integer getBaseRoleId() {
         return baseRoleId;
     }
 
-    public void setBaseRoleId(Long baseRoleId) {
+    public void setBaseRoleId(Integer baseRoleId) {
         this.baseRoleId = baseRoleId;
     }
 
-    public Long getPermissionId() {
+    public Integer getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Long permissionId) {
+    public void setPermissionId(Integer permissionId) {
         this.permissionId = permissionId;
     }
 }

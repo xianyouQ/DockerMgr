@@ -60,8 +60,6 @@ public class MyPermissionsAuthorizationFilter extends AccessControlFilter {
 
     @Override
     protected boolean pathsMatch(String pattern, String path) {
-        LOGGER.info(pattern);
-        LOGGER.info(path);
         return this.pathMatcher.matches(pattern, path);
     }
 
@@ -69,7 +67,6 @@ public class MyPermissionsAuthorizationFilter extends AccessControlFilter {
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
         Subject subject = this.getSubject(request, response);
         String[] perms = (String[])((String[])mappedValue);
-        LOGGER.info(perms);
         boolean isPermitted = true;
         if (perms != null && perms.length > 0) {
             if (perms.length == 1) {

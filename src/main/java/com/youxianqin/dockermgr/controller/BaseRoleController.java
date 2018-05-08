@@ -2,9 +2,12 @@ package com.youxianqin.dockermgr.controller;
 
 
 import com.youxianqin.dockermgr.models.BaseRole;
+import com.youxianqin.dockermgr.models.Permission;
 import com.youxianqin.dockermgr.service.BaseRoleService;
+import com.youxianqin.dockermgr.service.PermissionService;
 import com.youxianqin.dockermgr.util.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,7 +19,11 @@ public class BaseRoleController {
     @Autowired
     private BaseRoleService baseRoleService;
 
+    @Autowired
+    private PermissionService permissionService;
+
     @RequestMapping(method = RequestMethod.POST)
+
     public ResponseData createBaseRole(@RequestBody BaseRole baseRole) {
         ResponseData<BaseRole> response = new ResponseData<BaseRole>();
         baseRoleService.createBaseRole(baseRole);

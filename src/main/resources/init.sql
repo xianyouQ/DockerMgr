@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `permission`;
     CREATE TABLE IF NOT EXISTS `role_user` (
         `id` INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
         `user_id` INTEGER NOT NULL,
-        `service_id` INTEGER NOT NULL,
+        `service_id` INTEGER NULL,
         `base_role_id` INTEGER NOT NULL
     ) ENGINE=InnoDB;
 	

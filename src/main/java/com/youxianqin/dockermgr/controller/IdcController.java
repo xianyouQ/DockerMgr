@@ -4,6 +4,7 @@ import com.youxianqin.dockermgr.models.Idc;
 import com.youxianqin.dockermgr.service.IdcService;
 import com.youxianqin.dockermgr.util.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,10 @@ public class IdcController {
     }
     @RequestMapping(method = RequestMethod.POST)
     public ResponseData createIdc(@RequestBody Idc idc) {
-        idcService.
+        idcService.createIdc(idc);
+
+        ResponseData<Idc> response = new ResponseData<Idc>();
+        response.setData(idc);
+        return response;
     }
 }

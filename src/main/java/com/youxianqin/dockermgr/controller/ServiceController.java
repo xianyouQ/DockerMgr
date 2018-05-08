@@ -4,6 +4,7 @@ import com.youxianqin.dockermgr.models.Service;
 import com.youxianqin.dockermgr.service.ServiceService;
 import com.youxianqin.dockermgr.util.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
