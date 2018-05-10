@@ -14,21 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class BaseRolePermissionService {
 
-    @Autowired
-    private BaseRolePermissionMapper baseRolePermissionMapper;
+public interface BaseRolePermissionService {
 
-    @CacheEvict(cacheNames = "baseRoleCache")
-    @Transactional
-    public void updateEntitys(BaseRole baseRole,List<Permission> chosenList,List<Permission> disChosenList) {
 
-        if (disChosenList.size() > 0) {
-            baseRolePermissionMapper.deleteEntitys(baseRole,disChosenList);
-        }
-        if (chosenList.size() > 0 ) {
-            baseRolePermissionMapper.addEntitys(baseRole, chosenList);
-        }
-    }
+
+    public void updateEntitys(BaseRole baseRole,List<Permission> chosenList,List<Permission> disChosenList) ;
 }

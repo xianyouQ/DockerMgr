@@ -13,35 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class PermissionService {
-    @Autowired
-    private PermissionMapper permissionMapper;
 
-    @Autowired
-    BaseRolePermissionMapper baseRolePermissionMapper;
-    @CacheEvict(cacheNames = "permissionCache")
-    @Transactional
-    public Permission createPermission(Permission permission) {
-        permissionMapper.addEntity(permission);
-        return permission;
-    }
-    @Cacheable(cacheNames = "permissionCache")
-    public List<Permission> getPermissionList()  {
-        return permissionMapper.getEntity();
-    }
+public interface PermissionService {
 
-    @CacheEvict(cacheNames = "permissionCache")
-    @Transactional
-    public void deleteEntity(int permissionId) {
-        permissionMapper.deleteEntity(permissionId);
-        baseRolePermissionMapper.deleteEntityByPermission(permissionId);
-    }
+    public Permission createPermission(Permission permission) ;
+    public List<Permission> getPermissionList();
 
-    @CacheEvict(cacheNames = "permissionCache")
-    @Transactional
-    public Permission updatePermission(Permission permission){
-        permissionMapper.updateEntity(permission);
-        return permission;
-    }
+    public void deleteEntity(int permissionId) ;
+
+
+    public Permission updatePermission(Permission permission);
 }

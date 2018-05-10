@@ -13,34 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class UserSerivce {
 
-    @Autowired
-    private UserMapper userMapper;
+public interface UserSerivce {
 
-    @CacheEvict(cacheNames = "userCache")
-    @Transactional
-    public User createUser(User user) {
-        userMapper.addEntity(user);
-        return user;
-    }
-    @Cacheable(cacheNames = "userCache")
-    public List<User> getUserList()  {
-        return userMapper.getEntity();
-    }
 
-    @CacheEvict(cacheNames = "userCache")
-    @Transactional
-    public void deleteUser(int userId) {
-        userMapper.deleteEntity(userId);
-    }
+    public User createUser(User user) ;
+    public List<User> getUserList();
 
-    @CacheEvict(cacheNames = "userCache")
-    @Transactional
-    public User updateUser(User user){
-        userMapper.updateEntity(user);
-        return user;
-    }
+
+    public void deleteUser(int userId);
+
+    public User updateUser(User user);
 
 }

@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(exclude = {
         ShiroWebFilterConfiguration.class
 })
-@EnableCaching(proxyTargetClass = true)
-@EnableTransactionManagement(proxyTargetClass = true)
+@EnableCaching
+@EnableTransactionManagement
 public class DockerMgrApplication {
 
     public static void main(String[] args) {

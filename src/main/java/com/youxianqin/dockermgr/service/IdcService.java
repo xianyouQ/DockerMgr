@@ -10,29 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class IdcService {
 
-    @Autowired
-    private IdcMapper idcMapper;
-    @Transactional
-    public Idc createIdc(Idc idc) {
-        idcMapper.addEntity(idc);
-        return idc;
-    }
+public interface IdcService {
 
-    public List<Idc> getIdcList()  {
-        return idcMapper.getEntity();
-    }
-    @Transactional
-    public void deleteEntity(int idcId) {
-        idcMapper.deleteEntity(idcId);
-    }
-    @Transactional
-    public Idc updateIdc(Idc idc){
-        idcMapper.updateEntity(idc);
-        return idc;
-    }
+
+    public Idc createIdc(Idc idc) ;
+
+    public List<Idc> getIdcList();
+    public void deleteEntity(int idcId);
+;
+    public Idc updateIdc(Idc idc);
 
 
 }
